@@ -21,8 +21,6 @@ Sensors That Has been Used:
 
  https://cdn-learn.adafruit.com/downloads/pdf/adafruit-tsl2591.pdf
  
- https://cdn-shop.adafruit.com/datasheets/TSL25911_Datasheet_EN_v1.pdf
- 
 https://cdn-learn.adafruit.com/downloads/pdf/adafruit-bmp388.pdf?timestamp=1556108471
 
  https://cdn-learn.adafruit.com/downloads/pdf/adafruit-si7021-temperature-plus-humidity-sensor.pdf
