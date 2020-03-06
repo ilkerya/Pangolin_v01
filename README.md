@@ -2,12 +2,14 @@
 DataLogger Arduino Atmega/Arduino Due // Arduino IDE / Atmel Studio 7.0
 
 CPU Modules  : Both Can Used as Selectable Due Needs to be debugged for I2C issue!!
+
 https://store.arduino.cc/arduino-mega-2560-rev3
 
 https://store.arduino.cc/arduino-due
 
 
 RTC and SD CArd Module
+
 https://www.adafruit.com/product/1141
 
 Display 128x64 SSD1306 OLED Display
