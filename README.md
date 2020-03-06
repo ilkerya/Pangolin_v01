@@ -16,6 +16,7 @@ https://esphome.io/components/display/ssd1306.html
 
 
 Sensors That Has been Used:
+
  https://cdn-learn.adafruit.com/downloads/pdf/adafruit-tsl2591.pdf
  
  https://cdn-shop.adafruit.com/datasheets/TSL25911_Datasheet_EN_v1.pdf
@@ -23,6 +24,8 @@ Sensors That Has been Used:
 https://cdn-learn.adafruit.com/downloads/pdf/adafruit-bmp388.pdf?timestamp=1556108471
 
  https://cdn-learn.adafruit.com/downloads/pdf/adafruit-si7021-temperature-plus-humidity-sensor.pdf
+ 
+ https://learn.adafruit.com/adafruit-lsm9ds1-accelerometer-plus-gyro-plus-magnetometer-9-dof-breakout
  
  https://moderndevice.com/product/wind-sensor/
  
