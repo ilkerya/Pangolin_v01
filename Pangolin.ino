@@ -12,11 +12,9 @@
  
  // #define DEBUG_SIMULATOR_MODE // For DEbugging As A Simulator
  
- 
+
  #define ARDUINO_MEGA // 8 bit AVR
  //#define ARDUINO_DUE // ARM Cortex M3
-
-
 
 #include <SPI.h>
 #include <SD.h>
