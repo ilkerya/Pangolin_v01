@@ -13,11 +13,21 @@
 
 #define OLED_GND 46// 13
 #define OLED_POWER 44// 13
+
+
 #define OLED_CS    40// 13
 #define OLED_RESET 38
 #define OLED_DC    36// 12  // common 50
 #define OLED_CLK   34 //13 // common  52
 #define OLED_MOSI  32// 11 //common 51
+
+/*
+#define OLED_CS    A0
+#define OLED_RESET A1
+#define OLED_DC    A2
+#define OLED_CLK   A3
+#define OLED_MOSI  A4
+*/
 
 
 /*
@@ -229,6 +239,8 @@ void displayValues(void)
       Serial.println("Card Problem");
         display.println("Problem");    
     }
+     //4th line
+  /*  
     //display.print("WindRaw:");
     display.print(RV_ADunits);
     display.print('/');    
@@ -237,6 +249,17 @@ void displayValues(void)
      display.print('/');    
   //  display.print("WindMPH:");
     display.println(Values.WindMPH);
+*/
+    display.print("x");
+    display.print(Accelometer.x); //6
+    
+    display.print(" y");
+    display.print(Accelometer.y); //7
+    
+
+     display.print(" z");
+     display.println(Accelometer.z); //7     
+    
     
     display.print(Values.TemperatureSi072,1);
    //  display.print("°");                     
@@ -249,7 +272,7 @@ void displayValues(void)
     display.print("hPA ");
     display.print(Values.TemperatureBMP,1);
    //  display.print("\0x7F");   
-    display.print("C");  
+    display.print("C ");  
     display.print(Values.Altitude,1);
     display.println("m");  
    /*  

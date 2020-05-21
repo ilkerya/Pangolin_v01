@@ -16,10 +16,43 @@
  #define ARDUINO_MEGA // 8 bit AVR
  //#define ARDUINO_DUE // ARM Cortex M3
 
- 
+
+
 #include <SPI.h>
 #include <SD.h>
 
+#define CS_PIN 8              //8-->Arduino Zero. 15-->ESP8266 
+/*
+///  ADE9153A INIT
+#define ARM_MATH_CM0PLUS
+#include  <ADE9153A.h>
+#include <ADE9153AAPI.h>
+// Basic initializations 
+#define SPI_SPEED 1000000     //SPI Speed
+#define CS_PIN 8              //8-->Arduino Zero. 15-->ESP8266 
+#define ADE9153A_RESET_PIN 4  //On-board Reset Pin
+#define USER_INPUT 5          //On-board User Input Button Pin
+#define LED 6                 //On-board LED pin
+ADE9153AClass ade9153A;
+
+struct EnergyRegs energyVals;  //Energy register values are read and stored in EnergyRegs structure
+struct PowerRegs powerVals;    //Metrology data can be accessed from these structures
+struct RMSRegs rmsVals;  
+struct PQRegs pqVals;
+struct AcalRegs acalVals;
+struct Temperature tempVal;
+
+void readandwrite(void);
+void resetADE9153A(void);
+
+int ledState = LOW;
+int inputState = LOW;
+unsigned long lastReport = 0;
+const long reportInterval = 2000;
+const long blinkInterval = 500;
+*/
+///  ADE9153A END
+    
 #include "RTClib.h"
 
 #include <Adafruit_GFX.h>
@@ -58,16 +91,28 @@ void startTimer(Tc *tc, uint32_t channel, IRQn_Type irq, uint32_t frequency) {
 
 
 void setup() {
+      pinMode(53, OUTPUT);  // SS Pin high to avoid miscommunication
+   digitalWrite(53, HIGH);  
+  
+
+     pinMode(10, OUTPUT);
+   digitalWrite(10, HIGH);  
+
+     pinMode(4, OUTPUT);  // ADE9153A_RESET_PIN
+   digitalWrite(4, HIGH);  
+
   SDCard.LogStatus = 0;
   SDCard.LogStatusInit = 0;
 
   // Open serial communications and wait for port to open:
   Serial.begin(115200);
   delay(10);
+  
     pinMode(LED_GREEN, OUTPUT);           // set pin to input
     digitalWrite(LED_GREEN, LOW);       // turn on pullup resistors  
     pinMode(LED_RED, OUTPUT);           // set pin to input
     digitalWrite(LED_RED, LOW);       // turn on pullup resistors
+
 
     pinMode(KEY_LEFT, INPUT);           // set pin to input
     pinMode(KEY_LEFT,INPUT_PULLUP);

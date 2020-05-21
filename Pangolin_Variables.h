@@ -8,6 +8,7 @@ void  SensorACccel_GyroInit();
 void  Sensors_PeripInit();
 
 void  AdcRead();
+void WindSensorRead();
 void  SensorRead_Si072();
 void  SensorAlt_Read();
 void  SensorLight_Read();

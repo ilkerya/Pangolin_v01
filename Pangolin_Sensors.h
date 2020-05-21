@@ -1,3 +1,7 @@
+
+
+
+
 #define TCAADDR 0x70  //  
 //#define CHANNEL_VOC 2 //  
 #define CHANNEL_TEMPHUM 7  // 0x40 default address 
@@ -9,13 +13,19 @@
 // https://cdn-shop.adafruit.com/datasheets/TSL25911_Datasheet_EN_v1.pdf
 //https://cdn-learn.adafruit.com/downloads/pdf/adafruit-bmp388.pdf?timestamp=1556108471
 // https://cdn-learn.adafruit.com/downloads/pdf/adafruit-si7021-temperature-plus-humidity-sensor.pdf
+// https://learn.adafruit.com/adafruit-lsm9ds1-accelerometer-plus-gyro-plus-magnetometer-9-dof-breakout  
 // https://moderndevice.com/product/wind-sensor/
 
 
 Adafruit_Si7021 THsensor = Adafruit_Si7021();
+
 Adafruit_TSL2591 tsl = Adafruit_TSL2591(2591); // pass in a number for the sensor identifier (for your use later)
+
+
 #define SEALEVELPRESSURE_HPA (1013.25)
-Adafruit_BMP3XX bmp; // I2C
+Adafruit_BMP3XX bmp; // I2C  //BAROMETRIC PRESSURE
+
+
 //Adafruit_LSM9DS1 lsm = Adafruit_LSM9DS1(); 
 
 
@@ -28,10 +38,30 @@ void Sensors_PeripInit(void){
   SD_Card_Init();
   DisplayInit();
   RTC_Init();
-  SensorInit_Si072();
-  SensorAlt_Init();
-  SensorLight_Init();
-  SensorACccel_GyroInit();
+
+  #ifdef TEMP_HUM_SENSOR_EXISTS
+    SensorInit_Si072(); // TEMP HUM
+  #else
+    Serial.println("No Temp_Hum_Sensor!!");
+  #endif 
+      
+  #ifdef BAR_PRES_SENSOR_EXISTS 
+     SensorAlt_Init();     //BAROMETRIC PRESSURE
+  #else
+    Serial.println("No Bar.Pressure_Sensor!!");
+  #endif 
+      
+  #ifdef LIGHT_SENSOR_EXISTS  
+    SensorLight_Init();  // LIGHT 
+  #else
+    Serial.println("No Light_Sensor!!");
+  #endif
+      
+  #ifdef ACCL_GYRO_SENSOR_EXISTS 
+    SensorACccel_GyroInit(); // ACCEL GYRO  
+   #else
+    Serial.println("No Accel Gyro_Sensor!!");
+  #endif    
 }
 
 

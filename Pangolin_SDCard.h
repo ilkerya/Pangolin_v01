@@ -31,6 +31,7 @@
 // MKRZero SD: SDCARD_SS_PIN
 
 const int chipSelect = 53; // mega
+//const int chipSelect = 10; // mega CAN BE ANY PIN SINCE ITS SLAVE
 // set up variables using the SD utility library functions:
 Sd2Card card;
 SdVolume volume;
@@ -180,6 +181,8 @@ void SD_Info_Only(){
       } 
 }
 */
+ 
+
 void SD_CardLogTask(){
   /*
   if(SDCard.Status == SD_NOT_Present){
@@ -192,19 +195,57 @@ void SD_CardLogTask(){
       SDCard.LogStatusInit = 1;
       // put header + data
             SD_Card_Info();
-            SD_Card_Init();     
-            dataString = "Year,Month,Date,Hour,Min,Sec,WindRaw,velReading,WindMPH,WindTemp,TemperatureSi072,Humidity,Pressure(hPa),";
-            dataString += "TemperatureBMP,Altitude(m),Luminosity,Acc.(x),Acc.(y),Acc.(z),Gyro(x),Gyro(y),Gyro(z)";  
+            SD_Card_Init();
+                 
+        //    dataString = "Year,Month,Date,Hour,Min,Sec,WindRaw,velReading,WindMPH,WindTemp,TemperatureSi072,Humidity,Pressure(hPa),";
+        //    dataString += "TemperatureBMP,Altitude(m),Luminosity,Acc.(x),Acc.(y),Acc.(z),Gyro(x),Gyro(y),Gyro(z)";  
+
+
+        dataString = "Year,Month,Date,Hour,Min,Sec,";
+      #ifdef WIND_SENSOR_EXISTS  
+        dataString += "WindRaw,velReading,WindMPH,WindTemp,";
+      #endif
+      #ifdef TEMP_HUM_SENSOR_EXISTS 
+        dataString += "TemperatureSi072,Humidity,";
+      #endif
+      #ifdef BAR_PRES_SENSOR_EXISTS
+        dataString += "Pressure(hPa),TemperatureBMP,Altitude(m),";
+      #endif
+      #ifdef LIGHT_SENSOR_EXISTS
+         dataString += "Luminosity,";
+      #endif
+      #ifdef   ACCL_GYRO_SENSOR_EXISTS       
+          dataString += "Acc.(x),Acc.(y),Acc.(z),Gyro(x),Gyro(y),Gyro(z)"; 
+      #endif        
     }
     else{
     // put  only data
           SD_Card_Init();     
-          dataString = Str_DispTime;          
+          dataString = Str_DispTime;  
+          /*        
           dataString += String(Values.WindRaw) + ',' + String(velReading)+ ',' + String(Values.WindTemp) + ',' +String(Values.WindMPH)+ ','       
-          + String(Values.TemperatureSi072)+ ',' + String(Values.Humidity)+ ','+ String(Values.Pressure)+ ',' 
-          + String(Values.TemperatureBMP) + ',' + String(Values.Altitude)+ ','+ String(Values.Luminosity) +','
-          + String(Accelometer.x) + ',' + String(Accelometer.y)+ ','+ String(Accelometer.z) + ','      
-          + String(Gyro.x) + ',' + String(Gyro.y)+ ','+ String(Gyro.z); 
+          + String(Values.TemperatureSi072)+ ',' + String(Values.Humidity)+ ','
+          + String(Values.Pressure)+ ',' + String(Values.TemperatureBMP) + ',' + String(Values.Altitude)+ ','
+          + String(Values.Luminosity) +','
+          + String(Accelometer.x) + ',' + String(Accelometer.y)+ ','+ String(Accelometer.z) + ',' + String(Gyro.x) + ',' + String(Gyro.y)+ ','+ String(Gyro.z);
+          */
+
+      #ifdef WIND_SENSOR_EXISTS  
+        dataString += String(Values.WindRaw) + ',' + String(velReading)+ ',' + String(Values.WindTemp) + ',' +String(Values.WindMPH)+ ',';
+      #endif
+      #ifdef TEMP_HUM_SENSOR_EXISTS 
+        dataString += String(Values.TemperatureSi072)+ ',' + String(Values.Humidity)+ ',';
+      #endif
+      #ifdef BAR_PRES_SENSOR_EXISTS
+        dataString +=  String(Values.Pressure)+ ',' + String(Values.TemperatureBMP) + ',' + String(Values.Altitude)+ ',';
+      #endif
+      #ifdef LIGHT_SENSOR_EXISTS
+         dataString +=  String(Values.Luminosity) +',';
+      #endif
+      #ifdef   ACCL_GYRO_SENSOR_EXISTS       
+         dataString += String(Accelometer.x) + ',' + String(Accelometer.y)+ ','+ String(Accelometer.z) + ',' + String(Gyro.x) + ',' + String(Gyro.y)+ ','+ String(Gyro.z);     
+      #endif
+           
     }
     File dataFile = SD.open(LOG_FILE, FILE_WRITE);
     // if the file is available, write to it:
@@ -226,6 +267,7 @@ void SD_CardLogTask(){
     SDCard.LogStatusInit = 0;
   }
 }
+
 
 /*
 void SD_Log_File(){  

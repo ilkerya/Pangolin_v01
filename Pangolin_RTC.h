@@ -1,6 +1,5 @@
 
 //https://github.com/adafruit/Data-Logger-shield
-
 // https://forum.arduino.cc/index.php?topic=523216.0
 
 // DS1307
@@ -9,13 +8,9 @@ RTC_PCF8523 rtc; // I2c Addres 0x68
 //char daysOfTheWeek[7][12] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
 char daysOfTheWeek[7][12] = {"Sunday", "Monday", "Tuesdy", "Wedns.", "Thurs.", "Friday", "Satur."};
 
-
 void RTC_TimeClock(){
 
-
-
     DateTime now = rtc.now();
-
     Serial.print(now.year(), DEC);
     Serial.print('/');
     Serial.print(now.month(), DEC);

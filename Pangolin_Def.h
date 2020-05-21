@@ -1,15 +1,21 @@
 
 
+#define TEMP_HUM_SENSOR_EXISTS  
+//#define LIGHT_SENSOR_EXISTS  
+//#define BAR_PRES_SENSOR_EXISTS  
+//#define ACCL_GYRO_SENSOR_EXISTS  
+//#define WIND_SENSOR_EXISTS  
+
 #define DEBUG_KEY
-#define LED_GREEN 3 // GREEN
-#define LED_RED 4 //RED
+#define LED_GREEN 3// 11//3 // GREEN
+#define LED_RED 4 // 12//4 //RED
 
 
 #define ON 1 //
 #define OFF 0 //
-#define KEY_LEFT 6 // ok
-#define KEY_MID 5 //
-#define KEY_RIGHT 2 //
+#define KEY_LEFT 6//13//6 // ok
+#define KEY_MID 5// 11//5 //
+#define KEY_RIGHT 2//12//2 //
 
 #define MENU_NULL 0
 #define MENU1   32

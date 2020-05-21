@@ -36,13 +36,24 @@ void MainLoop(void){
       Serial.println(Str_Time);
       Serial.print("Str_Date:");
       Serial.println(Str_Date);
-    
-      AdcRead();
-      SensorRead_Si072();
-      SensorAlt_Read();
-      SensorLight_Read();
-      SensorAcccel_GyroRead();
-    #endif
+
+
+      #ifdef WIND_SENSOR_EXISTS   
+        WindSensorRead();
+      #endif      
+      #ifdef TEMP_HUM_SENSOR_EXISTS
+        SensorRead_Si072();
+      #endif
+      #ifdef  BAR_PRES_SENSOR_EXISTS
+        SensorAlt_Read();
+      #endif
+      #ifdef LIGHT_SENSOR_EXISTS
+        SensorLight_Read();
+      #endif
+      #ifdef ACCL_GYRO_SENSOR_EXISTS
+        SensorAcccel_GyroRead();
+      #endif
+    #endif // end of  #ifndef DEBUG_SIMULATOR_MODE
 
     KeyTimeOutCheck();
 
@@ -77,7 +88,7 @@ void MainLoop(void){
 }
 
 
-void AdcRead(){
+void WindSensorRead(){
      #ifdef ARDUINO_MEGA
     ADCSRA |= (1 << ADEN); // enable adc
          #endif
