@@ -94,10 +94,10 @@ git add .
 git commit -m "Add existing file"
 
 // For Common git
-git push https://github.com/ilkerya/Phoenix master
+git push https://github.com/ilkerya/Pangolin master
 
 // For Electrolux git
-git push  http://git.int.electrolux.com/ilkerya/Phoenix_OpenAir.git master
+git push  http://git.int.electrolux.com/ilkerya/Phoenix_Pangolin.git master
 
 
 https://help.github.com/articles/fetching-a-remote/
