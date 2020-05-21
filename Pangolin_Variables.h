@@ -153,6 +153,7 @@ struct
   float z; //    
 }Gyro;
 
+/*
 
 // for wind sensor
 float zeroWindAdjustment = 0.1;             // individual adjustment parameter for wind sensor (standard = 0.1)
@@ -174,5 +175,7 @@ double velReading = 0;
 double tempReading = 25;   //default     // variables for sensor readings' temporary storage
 
 
- //(   int Analog 
+*/
+
+
   

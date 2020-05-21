@@ -89,6 +89,7 @@ void MainLoop(void){
 
 
 void WindSensorRead(){
+  /*
      #ifdef ARDUINO_MEGA
     ADCSRA |= (1 << ADEN); // enable adc
          #endif
@@ -100,6 +101,7 @@ void WindSensorRead(){
    #ifdef ARDUINO_MEGA
    ADCSRA &= ~ (1 << ADEN);            // turn off ADC
    #endif
+   */
 }
 
 

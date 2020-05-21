@@ -293,7 +293,7 @@ void SensorLight_Read(void) {
   Serial.println(Values.Luminosity, DEC);
 }
 
-
+/*
 
 void WindSpeed_Calculation(){
     tempReading = (double)Values.TemperatureSi072;
@@ -316,7 +316,7 @@ void WindSpeed_Calculation(){
     }
 }
   
-
+*/
 
 
 
