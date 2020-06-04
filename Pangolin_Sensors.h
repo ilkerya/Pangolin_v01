@@ -16,6 +16,9 @@
 // https://learn.adafruit.com/adafruit-lsm9ds1-accelerometer-plus-gyro-plus-magnetometer-9-dof-breakout  
 // https://moderndevice.com/product/wind-sensor/
 
+// https://www.sparkfun.com/products/14685      //I2c multiplexer
+// https://www.sparkfun.com/products/14589      // I2c sigle ended 2 diffrential 
+
 
 Adafruit_Si7021 THsensor = Adafruit_Si7021();
 
@@ -39,10 +42,24 @@ void Sensors_PeripInit(void){
   DisplayInit();
   RTC_Init();
 
-  #ifdef TEMP_HUM_SENSOR_EXISTS
-    SensorInit_Si072(); // TEMP HUM
+
+
+  #ifdef TEMP_HUM_1_SENSOR_EXISTS
+    SensorInit_Si072(SI072_FIRST_SENSOR); // TEMP HUM
   #else
-    Serial.println("No Temp_Hum_Sensor!!");
+    Serial.print("No Sensor On Channel!!");Serial.print("SI072_FIRST_SENSOR");
+  #endif 
+
+  #ifdef TEMP_HUM_2_SENSOR_EXISTS
+    SensorInit_Si072(SI072_SECOND_SENSOR); // TEMP HUM
+  #else
+    Serial.print("No Sensor On Channel!!");Serial.print("SI072_SECOND_SENSOR");
+  #endif 
+
+  #ifdef TEMP_HUM_3_SENSOR_EXISTS
+    SensorInit_Si072(SI072_THIRD_SENSOR); // TEMP HUM
+  #else
+    Serial.print("No Sensor On Channel!!");Serial.print("SI072_THIRD_SENSOR");
   #endif 
       
   #ifdef BAR_PRES_SENSOR_EXISTS 
@@ -125,13 +142,14 @@ void SensorAcccel_GyroRead(){
 }
   
   
-void SensorInit_Si072(){
+void SensorInit_Si072(byte Channel){
   // Temperature & Humidity Sensor
-  tcaselect(CHANNEL_TEMPHUM);
-  Serial.println("Si7021 test!");
+  if(Channel != NO_IC2_MULTIPLEXER)tcaselect(Channel);
+  Serial.print("Sensor_Channel:");Serial.print(Channel);
+  Serial.println("  Si7021 test!");
   
   if (!THsensor.begin()) {
-    Serial.println("Did not find Si7021 sensor!");
+    Serial.print("No Si7021 sensor On Channel: ");Serial.println(Channel);
   //  delay(250);
   //  while (true)      
   }else{
@@ -140,19 +158,55 @@ void SensorInit_Si072(){
     Serial.print(THsensor.getRevision());
     Serial.print(")");
     Serial.print(" Serial #"); Serial.print(THsensor.sernum_a, HEX); Serial.println(THsensor.sernum_b, HEX);
+    Serial.print("Sensor_Channel:");Serial.println(Channel);
   }
 }
-void SensorRead_Si072(){
-    tcaselect(CHANNEL_TEMPHUM);
-  Serial.print("Humidity:    ");
-  Values.Humidity = THsensor.readHumidity();
-//  Serial.print(THsensor.readHumidity(), 2);
-  Serial.print(Values.Humidity, 2); 
-   
-  Serial.print("\tTemperature: ");
-  //Serial.println(THsensor.readTemperature(), 2);
-  Values.TemperatureSi072 = THsensor.readTemperature();
-   Serial.println(Values.TemperatureSi072, 2); 
+void SensorRead_Si072(byte Channel){
+    if(Channel != NO_IC2_MULTIPLEXER)tcaselect(Channel);
+    //tcaselect(CHANNEL_TEMPHUM);
+
+    Serial.print("Humidity_");Serial.print(Channel);Serial.print(" %");
+
+    switch(Channel){
+      case NO_IC2_MULTIPLEXER:
+      case SI072_FIRST_SENSOR: 
+        Values.Humidity_Ch1 = THsensor.readHumidity();
+        Serial.print(Values.Humidity_Ch1, 2);
+       break;
+      case SI072_SECOND_SENSOR: 
+        Values.Humidity_Ch2 = THsensor.readHumidity();
+        Serial.print(Values.Humidity_Ch2, 2);
+       break;
+      case SI072_THIRD_SENSOR: 
+        Values.Humidity_Ch3 = THsensor.readHumidity();
+        Serial.print(Values.Humidity_Ch3, 2);
+       break; 
+       default:
+        Serial.print("error");
+       break;
+    }
+ 
+    Serial.print(" Temperature");Serial.print(Channel);Serial.print(" :");
+
+    switch(Channel){
+      case NO_IC2_MULTIPLEXER:
+      case SI072_FIRST_SENSOR: 
+        Values.TemperatureSi072_Ch1 = THsensor.readTemperature();
+        Serial.println(Values.TemperatureSi072_Ch1, 2);
+       break;
+      case SI072_SECOND_SENSOR: 
+        Values.TemperatureSi072_Ch2 = THsensor.readTemperature();
+        Serial.println(Values.TemperatureSi072_Ch2, 2);
+       break;
+      case SI072_THIRD_SENSOR: 
+        Values.TemperatureSi072_Ch3 = THsensor.readTemperature();
+        Serial.println(Values.TemperatureSi072_Ch3, 2);
+       break; 
+       default:
+        Serial.print("error");
+       break;
+    }
+    
 }
 void SensorAlt_Init() {
   tcaselect(CHANNEL_BAROMETRIC);

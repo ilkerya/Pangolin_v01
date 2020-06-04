@@ -30,7 +30,8 @@
 // Sparkfun SD shield: pin 8
 // MKRZero SD: SDCARD_SS_PIN
 
-const int chipSelect = 53; // mega
+//const int chipSelect = 53; // mega old
+const int chipSelect = 10; // mega
 //const int chipSelect = 10; // mega CAN BE ANY PIN SINCE ITS SLAVE
 // set up variables using the SD utility library functions:
 Sd2Card card;
@@ -205,9 +206,18 @@ void SD_CardLogTask(){
       #ifdef WIND_SENSOR_EXISTS  
         dataString += "WindRaw,velReading,WindMPH,WindTemp,";
       #endif
-      #ifdef TEMP_HUM_SENSOR_EXISTS 
-        dataString += "TemperatureSi072,Humidity,";
+      #ifdef TEMP_HUM_1_SENSOR_EXISTS 
+        dataString += "TemperatureSi072_1,Humidity_1,";
       #endif
+      #ifdef TEMP_HUM_2_SENSOR_EXISTS 
+        dataString += "TemperatureSi072_2,Humidity_2,";
+      #endif
+       #ifdef TEMP_HUM_3_SENSOR_EXISTS 
+        dataString += "TemperatureSi072_3,Humidity_3,";
+      #endif     
+      #ifdef LEM_CURRENT_EXISTS 
+        dataString += "Current(A),";
+      #endif      
       #ifdef BAR_PRES_SENSOR_EXISTS
         dataString += "Pressure(hPa),TemperatureBMP,Altitude(m),";
       #endif
@@ -233,9 +243,18 @@ void SD_CardLogTask(){
       #ifdef WIND_SENSOR_EXISTS  
         dataString += String(Values.WindRaw) + ',' + String(velReading)+ ',' + String(Values.WindTemp) + ',' +String(Values.WindMPH)+ ',';
       #endif
-      #ifdef TEMP_HUM_SENSOR_EXISTS 
-        dataString += String(Values.TemperatureSi072)+ ',' + String(Values.Humidity)+ ',';
+      #ifdef TEMP_HUM_1_SENSOR_EXISTS 
+        dataString += String(Values.TemperatureSi072_Ch1)+ ',' + String(Values.Humidity_Ch1)+ ',';
       #endif
+      #ifdef TEMP_HUM_2_SENSOR_EXISTS 
+        dataString += String(Values.TemperatureSi072_Ch2)+ ',' + String(Values.Humidity_Ch2)+ ',';
+      #endif
+      #ifdef TEMP_HUM_3_SENSOR_EXISTS 
+        dataString += String(Values.TemperatureSi072_Ch3)+ ',' + String(Values.Humidity_Ch3)+ ',';
+      #endif   
+      #ifdef LEM_CURRENT_EXISTS 
+        dataString += String(Current_Mains) + ',';
+      #endif  
       #ifdef BAR_PRES_SENSOR_EXISTS
         dataString +=  String(Values.Pressure)+ ',' + String(Values.TemperatureBMP) + ',' + String(Values.Altitude)+ ',';
       #endif

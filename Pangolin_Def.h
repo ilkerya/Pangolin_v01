@@ -1,10 +1,18 @@
 
+ #define SI072_FIRST_SENSOR 7  // multiplexer Channel
+ #define SI072_SECOND_SENSOR 0
+ #define SI072_THIRD_SENSOR 2 
 
-#define TEMP_HUM_SENSOR_EXISTS  
+#define NO_IC2_MULTIPLEXER 16
+
+#define TEMP_HUM_1_SENSOR_EXISTS
+#define TEMP_HUM_2_SENSOR_EXISTS
+#define TEMP_HUM_3_SENSOR_EXISTS  
 //#define LIGHT_SENSOR_EXISTS  
 //#define BAR_PRES_SENSOR_EXISTS  
 //#define ACCL_GYRO_SENSOR_EXISTS  
 //#define WIND_SENSOR_EXISTS  
+#define LEM_CURRENT_EXISTS
 
 #define DEBUG_KEY
 #define LED_GREEN 3// 11//3 // GREEN
@@ -77,7 +85,9 @@ void KeyTimeOutCheck(void);
 void SD_CardLogTask(void);
 void SD_Log_File(void);
 void SD_Info_Only(void);
-
+void DisplayFullSensors(void);
+void DisplayTestDevices(void);
+void CurrentRead(void);
 
 /*
 First Time

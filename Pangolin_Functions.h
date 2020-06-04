@@ -19,6 +19,9 @@ void MainLoop(void){
       Display_SwitchOff();
       #endif
     }
+       #ifdef LEM_CURRENT_EXISTS        
+        CurrentRead();
+      #endif 
     
   }
   if(LoopTask_500msec){
@@ -40,10 +43,20 @@ void MainLoop(void){
 
       #ifdef WIND_SENSOR_EXISTS   
         WindSensorRead();
-      #endif      
-      #ifdef TEMP_HUM_SENSOR_EXISTS
-        SensorRead_Si072();
+      #endif   
+  
+      #ifdef TEMP_HUM_1_SENSOR_EXISTS
+        SensorRead_Si072(SI072_FIRST_SENSOR); // MULTIPLEXER NO
       #endif
+      #ifdef TEMP_HUM_2_SENSOR_EXISTS
+        SensorRead_Si072(SI072_SECOND_SENSOR); // MULTIPLEXER NO
+      #endif
+      #ifdef TEMP_HUM_3_SENSOR_EXISTS
+        SensorRead_Si072(SI072_THIRD_SENSOR); // MULTIPLEXER NO
+      #endif
+
+
+      
       #ifdef  BAR_PRES_SENSOR_EXISTS
         SensorAlt_Read();
       #endif
@@ -87,6 +100,36 @@ void MainLoop(void){
   }  
 }
 
+void CurrentRead(){
+  
+     #ifdef ARDUINO_MEGA
+    ADCSRA |= (1 << ADEN); // enable adc
+         #endif
+    delay(1);
+    Current_Mains_Raw = analogRead(5);
+
+    CurrentArray[CurrentIndexer]= Current_Mains_Raw;
+    CurrentIndexer++;
+    if(CurrentIndexer >=10){
+      CurrentIndexer = 0;
+      unsigned int Cumulative = 0;
+      for(unsigned int i=0; i<10; i++){
+          Cumulative += CurrentArray[i];   
+      } 
+      Cumulative /=  10;
+      //Current_MainsAverage = ((float)Cumulative * 4.883)/1000;
+      Current_MainsAverage = ((float)Cumulative * 5.044)/1000; // 2K2 // 4.7K // 2K2 
+    }
+
+    
+    //Current_Mains = ((float)Current_Mains_Raw * 4.883)/1000;
+  
+    Current_Mains = ((float)Current_Mains_Raw * 5.044)/1000;
+   #ifdef ARDUINO_MEGA
+   ADCSRA &= ~ (1 << ADEN);            // turn off ADC
+   #endif
+   
+}
 
 void WindSensorRead(){
   /*

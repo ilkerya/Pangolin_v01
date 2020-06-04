@@ -1,7 +1,7 @@
 
 //https://github.com/adafruit/Adafruit_SSD1306
 
-// https://upload.wikimedia.org/wikipedia/commons/f/f8/Codepage-437.png
+
 /*
 #define OLED_CS    48// 13
 #define OLED_RESET 46
@@ -51,9 +51,6 @@
 #define OLED_CLK   40 //13 // common  52
 #define OLED_MOSI  42// 11 //common 51
 */
-
-
-
 
 #define NUMFLAKES 10
 #define XPOS 0
@@ -154,42 +151,50 @@ void DisplayInit(void){
       //display.dim       
 }
 
-void testdrawchar(void) {
-  display.clearDisplay();
-
-  display.setTextSize(1);      // Normal 1:1 pixel scale
-  display.setTextColor(SSD1306_WHITE); // Draw white text
-  display.setCursor(0, 0);     // Start at top-left corner
-  display.cp437(true);         // Use full 256 char 'Code Page 437' font
-
-  // Not all the characters will fit on the display. This is normal.
-  // Library will draw what it can and the rest will be clipped.
-  for(int16_t i=0; i<256; i++) {
-    if(i == '\n') display.write(' ');
-    else          display.write(i);
-  }
-
-  display.display();
- // delay(2000);
-}
-
 void displayValues(void)
 {
   if(DisplayInitDelay == OFF)return;
-
-  //testdrawchar();
-  //return;
   
   display.clearDisplay();
   display.setTextSize(1);
-  
-   display.setCursor(0, 1);
+        display.setCursor(0, 1);
+    //display.print("->");
+
     display.print(Str_Time); 
     display.print(' ');    
     display.println(Str_Date);       
     //Str_Date + Str_Time + ' ';  
+/*
+      DateTime now = rtc.now();
 
+       //       display.setCursor(0, 1);
+       //       display.setCursor(1, 1);
+    if(now.hour()<10)display.print(' ');           
+    display.print(now.hour(), DEC);
+    display.print(':');
+    if(now.minute()<10)display.print('0');      
+    display.print(now.minute(), DEC);
+    display.print(':');
+    if(now.second()<10)display.print('0');        
+    display.print(now.second(), DEC);
+    display.print(" ");
 
+   display.print(daysOfTheWeek[now.dayOfTheWeek()]);
+
+   // display.print(daysOfTheWeek[now.dayOfTheWeek()]);
+  
+     display.print(" ");   
+  //  display.print(now.year(), DEC);
+ //   display.print('/');
+    if(now.month()<10)display.print('0');   
+    display.print(now.month(), DEC);
+    display.print('/');
+    if(now.day()<10)display.print('0');   
+    display.println(now.day(), DEC);
+*/
+   // display.print("Card:");//5
+
+  
       switch(SDCard.Status){
         case 0 :display.print("No Card  Reset 2 Run");// 26
         break;
@@ -235,12 +240,106 @@ void displayValues(void)
         display.println("Problem");    
     }
      //4th line
-   // DisplayFullSensors();
-    DisplayTestDevices();
-  
+  /*  
+    //display.print("WindRaw:");
+    display.print(RV_ADunits);
+    display.print('/');    
+    //display.print("WindTemp:");
+    display.print(Values.WindTemp);
+     display.print('/');    
+  //  display.print("WindMPH:");
+    display.println(Values.WindMPH);
+*/
+    display.print("x");
+    display.print(Accelometer.x); //6
+    
+    display.print(" y");
+    display.print(Accelometer.y); //7
+    
+
+     display.print(" z");
+     display.println(Accelometer.z); //7     
+    
+    
+    display.print(Values.TemperatureSi072,1);
+   //  display.print("°");                     
+    display.print("C %");
+    display.print(Values.Humidity,1); //
+    display.print(" Lm:");
+    display.println(Values.Luminosity); //
+
+    display.print(Values.Pressure,0);
+    display.print("hPA ");
+    display.print(Values.TemperatureBMP,1);
+   //  display.print("\0x7F");   
+    display.print("C ");  
+    display.print(Values.Altitude,1);
+    display.println("m");  
+   /*  
+    display.print("Menu:");
+    display.print(Menu);    
+    display.print(" OLEDTmr:");
+    display.println(OLED_Timer); 
+ */        
     display.setCursor(0, 57);
     DisplayMenu();
+    
+ /*   
+    display.print("Str:");
+    display.print(IndxStr);
+    display.print("End:");
+    display.print(IndxEnd);
+    display.print("Ctr:");
+    display.println(IndxCount);
 
+    display.print("OLED_Timer: ");
+    display.println(OLED_Timer);
+
+                    
+    display.print("KeyLogger:");
+    display.println(KeyLogger);
+
+
+    for (int i = 0; i < IndxStr ; i++){
+        display.print(' ');
+    }   
+    for (int i = IndxCount;  i < IndxEnd- IndxStr + IndxCount ; i++){
+        display.print(DisplayLine[i]);   
+    }
+    if(IndxStr)IndxStr--;//
+    else IndxCount++;  
+
+      if(IndxCount>=20){
+        IndxEnd--;
+      }
+      if(IndxCount>=25){
+        IndxCount =0; // all default
+        IndxStr = DEF_START_NULL_LINES;
+        IndxEnd = DEF_END_LINE_INDEX;
+      }
+*/
+
+       
+  /*            
+    display.print("Left:");
+    display.print(digitalRead(KEY_LEFT));
+
+    display.print("Mid:");
+    display.print(digitalRead(KEY_MID));
+    
+     display.print("Right:");
+    display.println(digitalRead(KEY_RIGHT));   
+     display.print(KeyLeft_Rel);
+     display.print(KeyMid_Rel);
+     display.print(KeyRight_Rel);
+
+  */  
+    //   display.print("SDCardStatus: ");
+    // display.println(SDCardStatus);  
+   // display.print("RTC_Test: ");
+  //  display.println(RTC_Test);
+    
+    
    display.display();
 }
 
@@ -302,92 +401,4 @@ void DisplayMenu(void){
     default: 
     break;
   }
-}
-void DisplayFullSensors(void){
-    display.print("x");
-    display.print(Accelometer.x); //6
-    
-    display.print(" y");
-    display.print(Accelometer.y); //7
-    
-
-     display.print(" z");
-     display.println(Accelometer.z); //7     
-    
-    
-    display.print(Values.TemperatureSi072_Ch1,1);
-   //  display.print("°");                     
-    display.print("C %");
-    display.print(Values.Humidity_Ch1,1); //
-    display.print(" Lm:");
-    display.println(Values.Luminosity); //
-
-    display.print(Values.Pressure,0);
-    display.print("hPA ");
-    display.print(Values.TemperatureBMP,1);
-   //  display.print("\0x7F");   
-    display.print("C ");  
-    display.print(Values.Altitude,1);
-    display.println("m"); 
-}
-
-void DisplayTestDevices(void){
-   //  display.print("");
-     display.print(Current_Mains_Raw); //7     
-
-     display.print("  ");
-     display.print(Current_Mains); //7  
-     display.print(" A");
-
-     display.print("  ");
-     display.print(Current_MainsAverage); //7  
-     display.println(" A");
-  // display.print("1:"); 
-    if (!isnan(Values.TemperatureSi072_Ch1)) {
-          display.print(Values.TemperatureSi072_Ch1,1);                    
-          display.write(247);display.print("C"); 
-    }
-    else  display.print("------");  
-
-
-   
-   if (!isnan(Values.Humidity_Ch1)) {
-    display.print(" %");
-    display.print((int)Values.Humidity_Ch1); // 
-   }
-    else  display.print("----");  
-    
-    display.print(" ");
-
-
-  // display.print("2:");  
-   if (!isnan(Values.TemperatureSi072_Ch2)) {
-        display.print(Values.TemperatureSi072_Ch2,1);
-        display.write(247);display.print("C"); 
-   }
-    else  display.print("------");  
-
-    if (!isnan(Values.Humidity_Ch2)) {
-    display.print(" %");
-    display.print((int)Values.Humidity_Ch2); // 
-   }
-    else  display.print("----");      
-
-  //  display.print(" ");
- //  display.print("3:");  
-      display.println(""); 
-     if (!isnan(Values.TemperatureSi072_Ch3)) {
-        display.print(Values.TemperatureSi072_Ch3,1);
-        display.write(247);display.print("C"); 
-   }
-    else  display.print("--");  
-
-    if (!isnan(Values.Humidity_Ch3)) {
-    display.print(" %");
-    display.print((int)Values.Humidity_Ch3); // 
-   }
-    else  display.print("--");     
-
-    display.println();
-               
 }

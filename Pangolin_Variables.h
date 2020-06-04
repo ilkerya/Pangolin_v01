@@ -1,7 +1,7 @@
 void MainLoop(); 
 void Display_ReInit(byte Timer);
 void  RTC_Init();
-void  SensorInit_Si072();
+void  SensorInit_Si072(byte);
 void  SensorAlt_Init();
 void  SensorLight_Init();
 void  SensorACccel_GyroInit();
@@ -78,7 +78,11 @@ struct
 byte KeyBoardTimeOut = 0;
 bool KeyBoardTimeOutEnb = 0;
 
-
+unsigned int Current_Mains_Raw;
+float Current_Mains;
+float Current_MainsAverage;
+unsigned int CurrentArray[10];
+byte CurrentIndexer = 0;
 
 bool DisplayInitDelay = 0;
 bool DisplaySleepEnable = 0;
@@ -129,8 +133,12 @@ unsigned int AD_Value3;
 
 struct
 {
-  float  Humidity;
-  float TemperatureSi072; // 27
+  float Humidity_Ch1;
+  float TemperatureSi072_Ch1; // 27
+  float Humidity_Ch2;
+  float TemperatureSi072_Ch2; // 27
+  float Humidity_Ch3;
+  float TemperatureSi072_Ch3; // 27  
   float Pressure; //  
   float TemperatureBMP; //  
   float Altitude; //

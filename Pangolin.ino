@@ -4,7 +4,8 @@
 */
  //for setting date&time open arduino serial monitor and send the data stream
  //   Year,Month,Date,Hour,Minute;Second
- //   2020,02,11,16,12,23
+ //   2020,05,27,21,14,23
+ //  2020,06,01,12,55,10
  // 115200 baud Both NL & CR
  // put leading zero for numbers less than 10
 
