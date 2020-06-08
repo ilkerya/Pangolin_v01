@@ -10,6 +10,8 @@ char daysOfTheWeek[7][12] = {"Sunday", "Monday", "Tuesdy", "Wedns.", "Thurs.", "
 
 void RTC_TimeClock(){
 
+  deBugString = "RTC_TClk_1";
+
     DateTime now = rtc.now();
     Serial.print(now.year(), DEC);
     Serial.print('/');
@@ -96,6 +98,7 @@ void RTC_TimeClock(){
     Serial.print(future.second(), DEC);
     Serial.println();
     */
+      deBugString = "RTC_TClk_2";
     }
 
  void  RTC_Init(){
@@ -124,6 +127,8 @@ void RTC_TimeClock(){
  }
 
  void RTC_SerialAdj() {
+
+  deBugString = "RTCSrlAd_1";
     static byte ndx = 0;
     char endMarker = '\n';
     byte Timer = 0;
@@ -197,7 +202,8 @@ void RTC_TimeClock(){
               Serial.println("Date & Time Adjusted");
           //    Display_ReInit(20);          
           }               
-      }  
+      } 
+      deBugString = "RTCSrlAd_2"; 
 }
 
 

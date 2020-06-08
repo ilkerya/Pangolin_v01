@@ -388,6 +388,8 @@ void DisplayTestDevices(void){
    }
     else  display.print("--");     
 
+    display.print(deBugString); // 
+
     display.println();
                
 }

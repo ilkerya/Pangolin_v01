@@ -185,6 +185,8 @@ void SD_Info_Only(){
  
 
 void SD_CardLogTask(){
+  //deBugString = "Start.....";
+    deBugString = "SDCLgTsk_1";
   /*
   if(SDCard.Status == SD_NOT_Present){
       SD_Card_Info();
@@ -230,8 +232,11 @@ void SD_CardLogTask(){
     }
     else{
     // put  only data
-          SD_Card_Init();     
+    deBugString = "SDCLgTsk_2";
+          SD_Card_Init();   
+    deBugString = "SDCLgTsk_3";        
           dataString = Str_DispTime;  
+     deBugString = "SDCLgTsk_4";     
           /*        
           dataString += String(Values.WindRaw) + ',' + String(velReading)+ ',' + String(Values.WindTemp) + ',' +String(Values.WindMPH)+ ','       
           + String(Values.TemperatureSi072)+ ',' + String(Values.Humidity)+ ','
@@ -266,25 +271,29 @@ void SD_CardLogTask(){
       #endif
            
     }
+    deBugString = "SDCLgTsk_5";
     File dataFile = SD.open(LOG_FILE, FILE_WRITE);
     // if the file is available, write to it:
+    deBugString = "SDCLgTsk_6";    
     if (dataFile) {
       dataFile.println(dataString);
       dataFile.close();
       // print to the serial port too:
         Serial.print("dataString:");
       Serial.println(dataString);
-    }
+    }      
     // if the file isn't open, pop up an error:
-    else {
+  else {
     //  Serial.println("error opening datalog.txt");
       Serial.print("error opening : "); 
       Serial.println(LOG_FILE);    
-    } 
+    }
+    deBugString = "SDCLgTsk_7";   
   }
   else{    // log off
     SDCard.LogStatusInit = 0;
   }
+  deBugString = "SDCLgTsk_8";
 }
 
 

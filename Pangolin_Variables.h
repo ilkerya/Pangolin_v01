@@ -94,6 +94,8 @@ File logfile;
 
 #define LOG_FILE "AD_Log.csv"
 
+String deBugString = "Start.....";  // Max 10 caharacter
+
     String dataString = "";
   //   String DataStr = "";   
    // String Date_Time = "";

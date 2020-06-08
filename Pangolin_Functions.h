@@ -46,13 +46,19 @@ void MainLoop(void){
       #endif   
   
       #ifdef TEMP_HUM_1_SENSOR_EXISTS
+        deBugString = "TmpHmSn1_1";  
         SensorRead_Si072(SI072_FIRST_SENSOR); // MULTIPLEXER NO
+        deBugString = "TmpHmSn1_2";
       #endif
       #ifdef TEMP_HUM_2_SENSOR_EXISTS
+        deBugString = "TmpHmSn2_1";
         SensorRead_Si072(SI072_SECOND_SENSOR); // MULTIPLEXER NO
+        deBugString = "TmpHmSn2_2";
       #endif
       #ifdef TEMP_HUM_3_SENSOR_EXISTS
+        deBugString = "TmpHmSn3_1";      
         SensorRead_Si072(SI072_THIRD_SENSOR); // MULTIPLEXER NO
+        deBugString = "TmpHmSn3_2";        
       #endif
 
 
@@ -101,7 +107,8 @@ void MainLoop(void){
 }
 
 void CurrentRead(){
-  
+    
+    deBugString = "Cur_tRd_1";
      #ifdef ARDUINO_MEGA
     ADCSRA |= (1 << ADEN); // enable adc
          #endif
@@ -128,7 +135,7 @@ void CurrentRead(){
    #ifdef ARDUINO_MEGA
    ADCSRA &= ~ (1 << ADEN);            // turn off ADC
    #endif
-   
+      deBugString = "Cur_tRd_2"; 
 }
 
 void WindSensorRead(){
