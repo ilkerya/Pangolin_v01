@@ -21,6 +21,7 @@
 #include <SPI.h>
 #include <SD.h>
 #include <EEPROM.h>
+#include <avr/wdt.h>
 
 #define CS_PIN 8              //8-->Arduino Zero. 15-->ESP8266 
 /*
@@ -131,7 +132,11 @@ void setup() {
 
     pinMode(KEY_RIGHT, INPUT);           // set pin to input
     pinMode(KEY_RIGHT,INPUT_PULLUP);
+    //wdt_enable(WDT0_1S);
 
+    wdt_enable(WDTO_8S);
+   
+    
     #ifdef ARDUINO_MEGA
        ADCSRA &= ~ (1 << ADEN);            // turn off ADC to save power ,, enable when needed and turn off again
     #endif
@@ -147,7 +152,7 @@ void setup() {
  #ifndef DEBUG_SIMULATOR_MODE
     Sensors_PeripInit();
   #endif
-  
+    wdt_reset();
 
     #ifdef ARDUINO_MEGA
      #endif
@@ -243,4 +248,5 @@ void TC3_Handler(){
 // the loop function runs over and over again forever
 void loop() {
     MainLoop(); 
+     wdt_reset();
 }       

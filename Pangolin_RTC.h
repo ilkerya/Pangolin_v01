@@ -186,7 +186,8 @@ void RTC_TimeClock(){
            Minute  += 10 * receivedChars[14];
            Minute  += receivedChars[15]; 
            Second  += 10 * receivedChars[17];    
-           Second  += receivedChars[18];       
+           Second  += receivedChars[18];
+           /*       
               Serial.print("Year:");  
               Serial.println(Year);
                Serial.print("Month:");  
@@ -199,10 +200,11 @@ void RTC_TimeClock(){
               Serial.print("Minute:");  
               Serial.println(Minute);
               Serial.print("Second:");  
-              Serial.println(Second);           
+              Serial.println(Second); 
+              */          
               rtc.adjust(DateTime(Year, Month, Day, Hour, Minute, Second));
-              Serial.println("Date & Time Adjusted");
-          //    Display_ReInit(20);          
+        //      Serial.println("Date & Time Adjusted");
+               
           }
         if((Timer == 10) && (receivedChars[0] == 'E' )&&(receivedChars[1] == 'E') && (receivedChars[2] == 'E')&&  (receivedChars[3] == 'E' )){
           // EE Serial Code Write
