@@ -5,7 +5,7 @@
  //for setting date&time open arduino serial monitor and send the data stream
  //   Year,Month,Date,Hour,Minute;Second
  //   2020,05,27,21,14,23
- //  2020,06,01,12,55,10
+ //  2020,06,09,21,16,40
  // EEEEf567 
  // 115200 baud Both NL & CR
  // put leading zero for numbers less than 10
@@ -95,19 +95,27 @@ void setup() {
       pinMode(53, OUTPUT);  // SS Pin high to avoid miscommunication
    digitalWrite(53, HIGH);  
   
-
      pinMode(10, OUTPUT);
    digitalWrite(10, HIGH);  
 
      pinMode(4, OUTPUT);  // ADE9153A_RESET_PIN
    digitalWrite(4, HIGH);  
 
-  SDCard.LogStatus = 0;
-  SDCard.LogStatusInit = 0;
+
 
   // Open serial communications and wait for port to open:
   Serial.begin(115200);
   delay(10);
+
+  //  SDCard.LogStatus = 0;      // default start with log off;
+  EEReadLog();
+  SDCard.LogStatusInit = 0;  // put the header of the csv file 
+
+   Serial.print("SDCard.LogStatus: ");  
+   Serial.print(SDCard.LogStatus); 
+   Serial.print("    SampleTime: ");  
+   Serial.println(SampleTime); 
+       
   
     pinMode(LED_GREEN, OUTPUT);           // set pin to input
     digitalWrite(LED_GREEN, LOW);       // turn on pullup resistors  
@@ -130,25 +138,7 @@ void setup() {
 
 
     ShowSerialCode();
-    
-  //  Value = EEPROM.read(4);
-    SerialCode = EEPROM.read(4);
-    SerialCode <<= 8;
-    SerialCode += EEPROM.read(5);
-    Serial.print("SerialCode:");
-    Serial.println(SerialCode);
-
-    /*
-    Serial.print("EE_4:");
-    Serial.println(Value);
-
-    Value = EEPROM.read(5);   
-
-    Serial.print("EE_5:");
-    Serial.println(Value);
-*/
-    
-    
+        
  /*
   while (!Serial) {
     ; // wait for serial port to connect. Needed for native USB port only
@@ -242,7 +232,7 @@ void TC3_Handler(){
       IntTimer20 = 0;
       LoopTask_20Sec = ON;
     }
-    if(IntTimer60 >= 1000){  // 60 sec
+    if(IntTimer60 >= 3000){  // 60 sec
       IntTimer60 = 0;
       LoopTask_60Sec = ON;
     }        

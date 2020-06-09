@@ -31,14 +31,14 @@ bool OLED_Init = 0 ;
 
 //unsigned int Timer =0;
 
-byte IntTimer250 = 0;
-byte IntTimer500 = 0;
-byte IntTimer1 = 0;
-byte IntTimer2 = 0;
-byte IntTimer5 = 0;
-byte IntTimer10 = 0;
-byte IntTimer20 = 0;
-byte IntTimer60 = 0;
+unsigned int IntTimer250 = 0;
+unsigned int  IntTimer500 = 0;
+unsigned int  IntTimer1 = 0;
+unsigned int  IntTimer2 = 0;
+unsigned int  IntTimer5 = 0;
+unsigned int  IntTimer10 = 0;
+unsigned int  IntTimer20 = 0;
+unsigned int  IntTimer60 = 0;
 
 bool LoopTask_250msec =0;
 bool LoopTask_500msec =0;
@@ -167,6 +167,13 @@ struct
   float y; // 27
   float z; //    
 }Gyro;
+
+
+#define ADDRES_LOG 8
+void EESetResetLog(bool Mode);
+void EEReadLog(void);
+
+
 
 /*
 

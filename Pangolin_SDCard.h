@@ -204,7 +204,7 @@ void SD_CardLogTask(){
         //    dataString = "Year,Month,Date,Hour,Min,Sec,WindRaw,velReading,WindMPH,WindTemp,TemperatureSi072,Humidity,Pressure(hPa),";
         //    dataString += "TemperatureBMP,Altitude(m),Luminosity,Acc.(x),Acc.(y),Acc.(z),Gyro(x),Gyro(y),Gyro(z)";  
         dataString ="";
-        dataString += "Id:" + EE_Id_EString + ',' + "SD Type" + SD_TypeString + ',' + "Volume " +String(SD_Volume) + " GB" + "\n";
+        dataString += "Dev_Id:" + EE_Id_EString + ',' + "SD Type: " + SD_TypeString + ',' + "Volume: " +String(SD_Volume) + " GB" + "\n";
         
         dataString += "Year,Month,Date,Hour,Min,Sec,";
       #ifdef WIND_SENSOR_EXISTS  
@@ -220,7 +220,7 @@ void SD_CardLogTask(){
         dataString += "TemperatureSi072_3,Humidity_3,";
       #endif     
       #ifdef LEM_CURRENT_EXISTS 
-        dataString += "Current(A),";
+        dataString += "Current(A)rms,";
       #endif      
       #ifdef BAR_PRES_SENSOR_EXISTS
         dataString += "Pressure(hPa),TemperatureBMP,Altitude(m),";
@@ -260,7 +260,7 @@ void SD_CardLogTask(){
         dataString += String(Values.TemperatureSi072_Ch3)+ ',' + String(Values.Humidity_Ch3)+ ',';
       #endif   
       #ifdef LEM_CURRENT_EXISTS 
-        dataString += String(Current_Mains) + ',';
+        dataString += String(Current_MainsAverage) + ',';
       #endif  
       #ifdef BAR_PRES_SENSOR_EXISTS
         dataString +=  String(Values.Pressure)+ ',' + String(Values.TemperatureBMP) + ',' + String(Values.Altitude)+ ',';

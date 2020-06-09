@@ -475,7 +475,9 @@ void EnterMenuKey(void){
         case TASK_20SEC :Menu = MENU2_SUB6;
           break;            
         case TASK_60SEC :Menu = MENU2_SUB7;
-          break;     
+          break; 
+        default:
+         break;    
       }
       break;
     case MENU3 : // Menu = MENU3MIN;
@@ -485,10 +487,10 @@ void EnterMenuKey(void){
       break;
 
 
-    case MENU1_SUB1 :  LogEnable(ON);SDCard.LogStatus = ON;
+    case MENU1_SUB1 :  LogEnable(ON);SDCard.LogStatus = ON;EESetResetLog(ON);
           Menu =  MENU_NULL;//MENU1
       break;
-    case MENU1_SUB2 : LogEnable(OFF); SDCard.LogStatus = OFF;// default
+    case MENU1_SUB2 : LogEnable(OFF); SDCard.LogStatus = OFF;EESetResetLog(OFF);// default
           Menu =  MENU_NULL;//MENU1
       break;
     case MENU2_SUB1 :  SampleTime = TASK_500MSEC ;
@@ -533,4 +535,31 @@ void EE_SerNoWrite2_EE(unsigned int SerialNo){
     t = (byte)(SerialNo>>8);  
     EEPROM.write(5, t);// high byte
  
+}
+
+void EESetResetLog(bool Mode){
+     if(Mode == OFF)EEPROM.write(ADDRES_LOG, OFF);// OFF
+     else EEPROM.write(ADDRES_LOG, SampleTime);// ON
+}
+
+void EEReadLog(void){
+    byte Mode = EEPROM.read(ADDRES_LOG);// OFF
+     switch(Mode){
+       case TASK_500MSEC: SDCard.LogStatus = ON;SampleTime =  Mode; 
+          break;        
+        case TASK_1SEC : SDCard.LogStatus = ON;SampleTime =  Mode; 
+          break; 
+        case TASK_2SEC : SDCard.LogStatus = ON;SampleTime =  Mode; 
+          break;        
+        case TASK_5SEC : SDCard.LogStatus = ON;SampleTime =  Mode; 
+          break;  
+        case TASK_10SEC :SDCard.LogStatus = ON;SampleTime =  Mode; 
+          break; 
+        case TASK_20SEC :SDCard.LogStatus = ON;SampleTime =  Mode; 
+          break;            
+        case TASK_60SEC :SDCard.LogStatus = ON;SampleTime =  Mode; 
+          break; 
+        default:SDCard.LogStatus = OFF;SampleTime =  TASK_2SEC;  
+         break;    
+      }   
 }

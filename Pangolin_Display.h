@@ -108,8 +108,10 @@ void Display_ReInit(byte Timer){
     pinMode(OLED_POWER, OUTPUT);
     OLED_Timer = Timer; // 10 sec
     digitalWrite(OLED_POWER, HIGH);       // 
-    digitalWrite(OLED_GND, LOW);       //   
-    if(!display.begin(SSD1306_SWITCHCAPVCC)) {
+    digitalWrite(OLED_GND, LOW);       //  
+
+    
+    if(!display.begin(SSD1306_SWITCHCAPVCC)) {  //    SSD1306_EXTERNALVCC
         Serial.println("SSD1306 allocation failed");
             //for(;;); // Don’t proceed, loop forever
     }
@@ -134,7 +136,7 @@ void DisplayInit(void){
     digitalWrite(OLED_POWER, HIGH);       // turn on pullup resistors
     
     Serial.println("Display Initing");
-    if(!display.begin(SSD1306_SWITCHCAPVCC)) {
+    if(!display.begin(SSD1306_SWITCHCAPVCC)) {  //  SSD1306_EXTERNALVCC
         Serial.println("SSD1306 allocation failed");
   
      // for(;;); // Don’t proceed, loop forever
