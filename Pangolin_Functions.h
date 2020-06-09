@@ -1,3 +1,47 @@
+void ShowSerialCode(){
+    /*
+    SerialCode = EEPROM.read(4);
+    SerialCode <<= 8;
+    SerialCode += EEPROM.read(5);
+    Serial.print("SerialCode:");
+    Serial.println(SerialCode);
+    */
+
+    char c;
+    EEString =""; 
+
+    Serial.print("EE: ");
+    c = (char)EEPROM.read(4);
+    EEString += String(c);
+    Serial.print(c);
+    c = (char)EEPROM.read(5);
+    EEString += String(c);
+    Serial.print(c);
+    c = (char)EEPROM.read(6);
+    EEString += String(c);
+    Serial.print(c);    
+    c = (char)EEPROM.read(7);
+    EEString += String(c);
+    Serial.print(c);
+
+    Serial.print("    EEString:  ");
+    Serial.print(EEString);
+  
+ /*   
+    Serial.print(EEPROM.read(4));
+    Serial.print(EEPROM.read(5));
+    Serial.print(EEPROM.read(6));
+    Serial.print(EEPROM.read(7));
+
+ */   
+    Serial.println();
+
+
+  
+
+    
+ }
+
 void MainLoop(void){
   if(LoopTask_250msec){
     LoopTask_250msec = OFF;
@@ -77,6 +121,7 @@ void MainLoop(void){
     KeyTimeOutCheck();
 
     if(SampleTime == TASK_1SEC) SD_CardLogTask();
+    ShowSerialCode();
     
   }
   if(LoopTask_2Sec){
@@ -478,4 +523,14 @@ void EnterMenuKey(void){
     default: Menu = MENU_NULL;
 
   }
+}
+void EE_SerNoWrite2_EE(unsigned int SerialNo){
+        //  EEPROM.write(Adr, byte);
+        // byte t = 0XFFFF & (SerialNo>>8);
+    byte t;
+    t = (byte)SerialNo;    
+    EEPROM.write(4, t);// low byte
+    t = (byte)(SerialNo>>8);  
+    EEPROM.write(5, t);// high byte
+ 
 }

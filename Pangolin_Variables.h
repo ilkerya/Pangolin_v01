@@ -14,10 +14,12 @@ void  SensorAlt_Read();
 void  SensorLight_Read();
 void  SensorAcccel_GyroRead();
 
+void EE_SerNoWrite2_EE(unsigned int SerialNo);
+
 byte Menu =0;
+unsigned int SerialCode =0;
 
 unsigned int KeyLogger=0;
-
 
 bool KeyLeft_Rel = 0;
 bool KeyMid_Rel = 0;
@@ -93,6 +95,8 @@ bool DisplaySleepEnable = 0;
 File logfile;
 
 #define LOG_FILE "AD_Log.csv"
+
+String EEString =""; 
 
 String deBugString = "Start.....";  // Max 10 caharacter
 

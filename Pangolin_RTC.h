@@ -133,11 +133,11 @@ void RTC_TimeClock(){
     char endMarker = '\n';
     byte Timer = 0;
     byte CharByte = 0;
-      char rc;
+    char rc;
         // if (Serial.available() > 0) {
-           while (Serial.available() > 0 && newData == false) {
+     while (Serial.available() > 0 && newData == false) {
         rc = Serial.read();
-        Timer++;
+        Timer++; // 2020,05,27,21,14,23 19 characters + \0' // in total 21
 
       if (rc != endMarker) {
             receivedChars[ndx] = rc;
@@ -152,19 +152,21 @@ void RTC_TimeClock(){
         newData = true;
     }
   }
-    if (newData == true) {
+  //////////////////// end of while loop
+    deBugString = "RTCSrlAd_2"; 
+  
+   if (newData == true) {
         Serial.print("This just in .................................. ");
           Serial.println(receivedChars);
-          newData = false;        
-         Serial.print("Timer:");  
-         Serial.println(Timer);
-
-       unsigned int Year=0; 
-       unsigned int Month=0; 
-        unsigned int Day=0;                       
-       unsigned int Hour=0; 
-       unsigned int Minute=0; 
-        unsigned int Second=0; 
+          newData = false;            
+          Serial.print("Timer:");  
+          Serial.println(Timer);
+          unsigned int Year=0; 
+          unsigned int Month=0; 
+          unsigned int Day=0;                       
+          unsigned int Hour=0; 
+          unsigned int Minute=0; 
+          unsigned int Second=0; 
                
         if((Timer == 21) && (receivedChars[4] == ',' )&&(receivedChars[7] == ',') && 
            (receivedChars[10] == ',')&&  (receivedChars[13] == ',' )&& (receivedChars[16] == ',' )){
@@ -201,10 +203,51 @@ void RTC_TimeClock(){
               rtc.adjust(DateTime(Year, Month, Day, Hour, Minute, Second));
               Serial.println("Date & Time Adjusted");
           //    Display_ReInit(20);          
-          }               
+          }
+        if((Timer == 10) && (receivedChars[0] == 'E' )&&(receivedChars[1] == 'E') && (receivedChars[2] == 'E')&&  (receivedChars[3] == 'E' )){
+          // EE Serial Code Write
+          //receivedChars[4] == 'E' ;
+/*
+          unsigned int Code=0;
+       //   Code <<= 12;
+          Code += (receivedChars[4]<<12);          
+          Code += (receivedChars[5]<<8);
+          Code += (receivedChars[6]<<4);
+          Code += receivedChars[7];
+    */      
+       
+          Serial.print("EECode:");
+
+          EEPROM.write(4, receivedChars[4]);// high byte
+          Serial.print(receivedChars[4]);
+
+          EEPROM.write(5, receivedChars[5]);// high byte          
+          Serial.print(receivedChars[5]);       
+
+           EEPROM.write(6, receivedChars[6]);// high byte         
+          Serial.print(receivedChars[6]);
+
+           EEPROM.write(7, receivedChars[7]);// high byte         
+          Serial.println(receivedChars[7]);
+
+
+          
+        //  Serial.println(Code);  
+/*
+          EEPROM.write(4, receivedChars[4]);// high byte
+          EEPROM.write(5, receivedChars[5]);// low byte
+          EEPROM.write(6, receivedChars[6]);// high byte
+          EEPROM.write(7, receivedChars[7]);// low byte
+       */   
+          delay(10);
+
+          
+        //EE_SerNoWrite2_EE();
+                         
       } 
-      deBugString = "RTCSrlAd_2"; 
-}
+      deBugString = "RTCSrlAd_3"; 
+    }
+ }
 
 
 /*

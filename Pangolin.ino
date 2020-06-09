@@ -6,6 +6,7 @@
  //   Year,Month,Date,Hour,Minute;Second
  //   2020,05,27,21,14,23
  //  2020,06,01,12,55,10
+ // EEEEf567 
  // 115200 baud Both NL & CR
  // put leading zero for numbers less than 10
 
@@ -19,6 +20,7 @@
 
 #include <SPI.h>
 #include <SD.h>
+#include <EEPROM.h>
 
 #define CS_PIN 8              //8-->Arduino Zero. 15-->ESP8266 
 /*
@@ -125,6 +127,27 @@ void setup() {
     #ifdef ARDUINO_MEGA
        ADCSRA &= ~ (1 << ADEN);            // turn off ADC to save power ,, enable when needed and turn off again
     #endif
+
+
+    ShowSerialCode();
+    
+  //  Value = EEPROM.read(4);
+    SerialCode = EEPROM.read(4);
+    SerialCode <<= 8;
+    SerialCode += EEPROM.read(5);
+    Serial.print("SerialCode:");
+    Serial.println(SerialCode);
+
+    /*
+    Serial.print("EE_4:");
+    Serial.println(Value);
+
+    Value = EEPROM.read(5);   
+
+    Serial.print("EE_5:");
+    Serial.println(Value);
+*/
+    
     
  /*
   while (!Serial) {

@@ -391,5 +391,7 @@ void DisplayTestDevices(void){
     display.print(deBugString); // 
 
     display.println();
+
+    display.print(EEString); // 
                
 }
