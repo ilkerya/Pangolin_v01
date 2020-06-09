@@ -183,27 +183,10 @@ void SD_Info_Only(){
       } 
 }
 */
- 
-
-void SD_CardLogTask(){
-  //deBugString = "Start.....";
-    deBugString = "SDCLgTsk_1";
-  /*
-  if(SDCard.Status == SD_NOT_Present){
-      SD_Card_Info();
-      SD_Card_Init();
-  }
-    */
-  if(SDCard.LogStatus){ // log on
-    if(!SDCard.LogStatusInit){
-      SDCard.LogStatusInit = 1;
-      // put header + data
-            SD_Card_Info();
-            SD_Card_Init();
-                 
-        //    dataString = "Year,Month,Date,Hour,Min,Sec,WindRaw,velReading,WindMPH,WindTemp,TemperatureSi072,Humidity,Pressure(hPa),";
+void SD_Card_Header_Preparation(){
+          //    dataString = "Year,Month,Date,Hour,Min,Sec,WindRaw,velReading,WindMPH,WindTemp,TemperatureSi072,Humidity,Pressure(hPa),";
         //    dataString += "TemperatureBMP,Altitude(m),Luminosity,Acc.(x),Acc.(y),Acc.(z),Gyro(x),Gyro(y),Gyro(z)";  
-        dataString ="";
+        
         dataString += "Dev_Id:" + EE_Id_EString + ',' + "SD Type: " + SD_TypeString + ',' + "Volume: " +String(SD_Volume) + " GB" + "\n";
         
         dataString += "Year,Month,Date,Hour,Min,Sec,";
@@ -230,15 +213,10 @@ void SD_CardLogTask(){
       #endif
       #ifdef   ACCL_GYRO_SENSOR_EXISTS       
           dataString += "Acc.(x),Acc.(y),Acc.(z),Gyro(x),Gyro(y),Gyro(z)"; 
-      #endif        
-    }
-    else{
-    // put  only data
-    deBugString = "SDCLgTsk_2";
-          SD_Card_Init();   
-    deBugString = "SDCLgTsk_3";        
-          dataString = Str_DispTime;  
-     deBugString = "SDCLgTsk_4";     
+      #endif 
+}
+void SD_Card_Data_Preparation(){
+      dataString += Str_DispTime;     
           /*        
           dataString += String(Values.WindRaw) + ',' + String(velReading)+ ',' + String(Values.WindTemp) + ',' +String(Values.WindMPH)+ ','       
           + String(Values.TemperatureSi072)+ ',' + String(Values.Humidity)+ ','
@@ -246,7 +224,6 @@ void SD_CardLogTask(){
           + String(Values.Luminosity) +','
           + String(Accelometer.x) + ',' + String(Accelometer.y)+ ','+ String(Accelometer.z) + ',' + String(Gyro.x) + ',' + String(Gyro.y)+ ','+ String(Gyro.z);
           */
-
       #ifdef WIND_SENSOR_EXISTS  
         dataString += String(Values.WindRaw) + ',' + String(velReading)+ ',' + String(Values.WindTemp) + ',' +String(Values.WindMPH)+ ',';
       #endif
@@ -271,7 +248,39 @@ void SD_CardLogTask(){
       #ifdef   ACCL_GYRO_SENSOR_EXISTS       
          dataString += String(Accelometer.x) + ',' + String(Accelometer.y)+ ','+ String(Accelometer.z) + ',' + String(Gyro.x) + ',' + String(Gyro.y)+ ','+ String(Gyro.z);     
       #endif
-           
+  
+}
+
+void SD_CardLogTask(){
+  //deBugString = "Start.....";
+    deBugString = "SDCLgTsk_1";
+  /*
+  if(SDCard.Status == SD_NOT_Present){
+      SD_Card_Info();
+      SD_Card_Init();
+  }
+    */
+  if(SDCard.LogStatus){ // log on
+    if(!SDCard.LogStatusInit){
+      SDCard.LogStatusInit = 1;
+      // put header + data
+            SD_Card_Info();
+            SD_Card_Init();
+            
+            dataString ="";
+            SD_Card_Header_Preparation();dataString += "\n";
+            
+            SD_Card_Data_Preparation();         
+    }
+    else{ // put  only data  
+          deBugString = "SDCLgTsk_2";
+        SD_Card_Init();   
+          deBugString = "SDCLgTsk_3";
+          
+        dataString ="";  
+        SD_Card_Data_Preparation();
+        
+          deBugString = "SDCLgTsk_4";                  
     }
     deBugString = "SDCLgTsk_5";
     File dataFile = SD.open(LOG_FILE, FILE_WRITE);
