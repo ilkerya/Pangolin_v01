@@ -8,24 +8,24 @@ void ShowSerialCode(){
     */
 
     char c;
-    EEString =""; 
+    EE_Id_EString =""; 
 
     Serial.print("EE: ");
     c = (char)EEPROM.read(4);
-    EEString += String(c);
+    EE_Id_EString += String(c);
     Serial.print(c);
     c = (char)EEPROM.read(5);
-    EEString += String(c);
+    EE_Id_EString += String(c);
     Serial.print(c);
     c = (char)EEPROM.read(6);
-    EEString += String(c);
+    EE_Id_EString += String(c);
     Serial.print(c);    
     c = (char)EEPROM.read(7);
-    EEString += String(c);
+    EE_Id_EString += String(c);
     Serial.print(c);
 
-    Serial.print("    EEString:  ");
-    Serial.print(EEString);
+    Serial.print(" EE_Id_EString: ");
+    Serial.print(EE_Id_EString);
   
  /*   
     Serial.print(EEPROM.read(4));

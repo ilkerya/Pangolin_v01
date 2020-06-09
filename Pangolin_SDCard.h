@@ -84,6 +84,7 @@ void SD_Card_Info(void){
         SDCard.Status = UNKNOWN_TYPE;
         Serial.println("Unknown");
     }
+ //   SD_TypeString = String(SDCard.Status);
 
       // Now we will try to open the 'volume'/'partition' - it should be FAT16 or FAT32
       if (!volume.init(card)) {
@@ -155,13 +156,13 @@ void SD_Card_Init(){
   else
      Serial.println("card Ready For Logging."); 
       switch(SDCard.Status){
-      case 1 : //SD1
+      case 1 : SD_TypeString ="SD1 Card "; //SD1
       break;
-      case 2 ://SD2
+      case 2 :SD_TypeString ="SD2 Card ";//SD2
       break;
-      case 3 ://SDHC
+      case 3 :SD_TypeString ="SDHC Card ";//SDHC
       break; 
-      case 0 ://no card   
+      case 0 :SD_TypeString ="Card Problem    !";//no card   
       default: //SD_Card_Reset = OFF;//unknown  
       break;     
     }
@@ -202,9 +203,10 @@ void SD_CardLogTask(){
                  
         //    dataString = "Year,Month,Date,Hour,Min,Sec,WindRaw,velReading,WindMPH,WindTemp,TemperatureSi072,Humidity,Pressure(hPa),";
         //    dataString += "TemperatureBMP,Altitude(m),Luminosity,Acc.(x),Acc.(y),Acc.(z),Gyro(x),Gyro(y),Gyro(z)";  
-
-
-        dataString = "Year,Month,Date,Hour,Min,Sec,";
+        dataString ="";
+        dataString += "Id:" + EE_Id_EString + ',' + "SD Type" + SD_TypeString + ',' + "Volume " +String(SD_Volume) + " GB" + "\n";
+        
+        dataString += "Year,Month,Date,Hour,Min,Sec,";
       #ifdef WIND_SENSOR_EXISTS  
         dataString += "WindRaw,velReading,WindMPH,WindTemp,";
       #endif

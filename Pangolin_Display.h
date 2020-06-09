@@ -392,6 +392,6 @@ void DisplayTestDevices(void){
 
     display.println();
 
-    display.print(EEString); // 
+    display.print(EE_Id_EString); // 
                
 }

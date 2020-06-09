@@ -96,7 +96,7 @@ File logfile;
 
 #define LOG_FILE "AD_Log.csv"
 
-String EEString =""; 
+String EE_Id_EString =""; 
 
 String deBugString = "Start.....";  // Max 10 caharacter
 
@@ -107,6 +107,7 @@ String deBugString = "Start.....";  // Max 10 caharacter
     String Str_Date="";
     String Str_DispTime="";
     float SD_Volume;
+    String SD_TypeString = "";
  //   bool SD_Card_Reset = 1;   
     byte RTC_Test = 2;
     String incomingStr ="";
