@@ -135,6 +135,7 @@ void setup() {
     //wdt_enable(WDT0_1S);
 
     wdt_enable(WDTO_8S);
+    //https://www.nongnu.org/avr-libc/user-manual/group__avr__watchdog.html
    
     
     #ifdef ARDUINO_MEGA
