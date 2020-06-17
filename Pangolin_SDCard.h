@@ -194,13 +194,23 @@ void SD_Card_Header_Preparation(){
         dataString += "WindRaw,velReading,WindMPH,WindTemp,";
       #endif
       #ifdef TEMP_HUM_1_SENSOR_EXISTS 
-        dataString += "TemperatureSi072_1,Humidity_1,";
+       // dataString += "TemperatureSi072_1,Humidity_1,";
+        dataString += "Temp1,Hum1(";
+        dataString += Sensor1_Id;
+        dataString += "),";
       #endif
       #ifdef TEMP_HUM_2_SENSOR_EXISTS 
-        dataString += "TemperatureSi072_2,Humidity_2,";
+       // dataString += "TemperatureSi072_2,Humidity_2,";
+        dataString += "Temp2,Hum2(";
+        dataString += Sensor2_Id;
+        dataString += "),";
+        
       #endif
        #ifdef TEMP_HUM_3_SENSOR_EXISTS 
-        dataString += "TemperatureSi072_3,Humidity_3,";
+      //  dataString += "TemperatureSi072_3,Humidity_3,";
+        dataString += "Temp3,Hum3(";
+        dataString += Sensor3_Id;
+        dataString += "),";     
       #endif     
       #ifdef LEM_CURRENT_EXISTS 
         dataString += "Current(A)rms,";

@@ -153,33 +153,65 @@ void SensorInit_Si072(byte Channel){
   //  delay(250);
   //  while (true)      
   }else{
-    Serial.println(" Si7021 sensor found!");
+    Serial.print(" Si7021 sensor found!");
     Serial.print(" Rev(");
     Serial.print(THsensor.getRevision());
     Serial.print(")");
-    Serial.print(" Serial #"); Serial.print(THsensor.sernum_a, HEX); Serial.println(THsensor.sernum_b, HEX);
-    Serial.print("Sensor_Channel:");Serial.println(Channel);
+     Serial.print(" Serial "); Serial.print(THsensor.sernum_a, HEX); Serial.println(THsensor.sernum_b, HEX);
+     Serial.print("Sensor_Channel:");Serial.println(Channel);
+     Serial.print(" String : ");
+    switch(Channel){
+      case NO_IC2_MULTIPLEXER:
+      case SI072_FIRST_SENSOR:
+            Sensor1_Id = String(THsensor.sernum_a, HEX) + String(THsensor.sernum_b,HEX); 
+            Sensor1_Id.toUpperCase();     
+            Serial.println(Sensor1_Id);
+       break;
+      case SI072_SECOND_SENSOR:
+            Sensor2_Id = String(THsensor.sernum_a, HEX) + String(THsensor.sernum_b,HEX);
+            Sensor2_Id.toUpperCase();        
+            Serial.println(Sensor2_Id);
+       break;
+      case SI072_THIRD_SENSOR: 
+            Sensor3_Id = String(THsensor.sernum_a, HEX) + String(THsensor.sernum_b,HEX);
+            Sensor3_Id.toUpperCase();        
+             Serial.println(Sensor3_Id);
+       break; 
+       default:
+              Serial.print("error");
+       break;
+    }  
   }
 }
+void GerSerialNo(void){
+      Serial.print(" Rev(");
+    Serial.print(THsensor.getRevision());
+    Serial.print(")");
+    Serial.print(" Serial #"); Serial.print(THsensor.sernum_a, HEX); Serial.println(THsensor.sernum_b, HEX);
+}
+
+
 void SensorRead_Si072(byte Channel){
     if(Channel != NO_IC2_MULTIPLEXER)tcaselect(Channel);
-    //tcaselect(CHANNEL_TEMPHUM);
 
     Serial.print("Humidity_");Serial.print(Channel);Serial.print(" %");
 
     switch(Channel){
       case NO_IC2_MULTIPLEXER:
       case SI072_FIRST_SENSOR: 
-        Values.Humidity_Ch1 = THsensor.readHumidity();
+        Values.Humidity_Ch1 = THsensor.readHumidity();       
         Serial.print(Values.Humidity_Ch1, 2);
+   
        break;
       case SI072_SECOND_SENSOR: 
         Values.Humidity_Ch2 = THsensor.readHumidity();
         Serial.print(Values.Humidity_Ch2, 2);
+
        break;
       case SI072_THIRD_SENSOR: 
         Values.Humidity_Ch3 = THsensor.readHumidity();
         Serial.print(Values.Humidity_Ch3, 2);
+ 
        break; 
        default:
         Serial.print("error");

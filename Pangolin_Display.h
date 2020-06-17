@@ -390,10 +390,33 @@ void DisplayTestDevices(void){
    }
     else  display.print("--");     
 
-    display.print(deBugString); // 
+    display.print(" "); // 
+    display.println(deBugString); // 
 
-    display.println();
 
-    display.print(EE_Id_EString); // 
-               
+
+
+    switch(DisplayValueTimer){
+      case 0:     
+          display.print("Dev Id:  "); // 
+          display.print(EE_Id_EString); //
+         break;
+         case 1:
+          display.print("1.   "); // SI072_FIRST_SENSOR
+          display.println(Sensor1_Id);
+         break;
+         case 2:
+          display.print("2.   "); // SI072_SECOND_SENSOR
+          display.println(Sensor2_Id);
+         break;
+         case 3:        
+            display.print("3.   "); // SI072_THIRD_SENSOR
+            display.println(Sensor3_Id);
+         break;
+         default:
+         break;
+         
+      
+    }
+        
 }

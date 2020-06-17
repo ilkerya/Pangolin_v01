@@ -1,7 +1,11 @@
-
- #define SI072_FIRST_SENSOR 7  // multiplexer Channel
- #define SI072_SECOND_SENSOR 0
- #define SI072_THIRD_SENSOR 2 
+/*
+git add .
+git commit -m "Comment"
+git push https://github.com/ilkerya/Pangolin.git master
+*/
+ #define SI072_FIRST_SENSOR 2  // multiplexer Channel
+ #define SI072_SECOND_SENSOR 7 // first prot  0
+ #define SI072_THIRD_SENSOR 1 
 
 #define NO_IC2_MULTIPLEXER 16
 

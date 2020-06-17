@@ -34,12 +34,7 @@ void ShowSerialCode(){
     Serial.print(EEPROM.read(7));
 
  */   
-    Serial.println();
-
-
-  
-
-    
+    Serial.println(); 
  }
 
 void MainLoop(void){
@@ -132,6 +127,9 @@ void MainLoop(void){
   if(LoopTask_5Sec){
     LoopTask_5Sec = OFF;
     if(SampleTime == TASK_5SEC) SD_CardLogTask();
+
+    DisplayValueTimer++;
+    if (DisplayValueTimer > 3)DisplayValueTimer = 0;
     
   }
   if(LoopTask_10Sec){

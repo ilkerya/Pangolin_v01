@@ -89,7 +89,11 @@ byte CurrentIndexer = 0;
 bool DisplayInitDelay = 0;
 bool DisplaySleepEnable = 0;
 
+byte DisplayValueTimer = 0;
 
+String Sensor1_Id = "";
+String Sensor2_Id = "";
+String Sensor3_Id = "";
 
 // the logging file
 File logfile;
