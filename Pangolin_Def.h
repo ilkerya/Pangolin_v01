@@ -1,11 +1,12 @@
+
 /*
 git add .
 git commit -m "Comment"
 git push https://github.com/ilkerya/Pangolin.git master
 */
- #define SI072_FIRST_SENSOR 7  // multiplexer Channel
- #define SI072_SECOND_SENSOR 0 // first prot  0
- #define SI072_THIRD_SENSOR 2 // sec1
+ #define SI072_FIRST_SENSOR 7  // multiplexer Channel 7 first blu box prot
+ #define SI072_SECOND_SENSOR 1 // first prot  0      0
+ #define SI072_THIRD_SENSOR 2 // sec1                2 
 
 #define NO_IC2_MULTIPLEXER 16
 
@@ -17,6 +18,7 @@ git push https://github.com/ilkerya/Pangolin.git master
 //#define ACCL_GYRO_SENSOR_EXISTS  
 //#define WIND_SENSOR_EXISTS  
 #define LEM_CURRENT_EXISTS
+#define PM25_DUST_SENSOR_EXISTS
 
 #define DEBUG_KEY
 #define LED_GREEN 3// 11//3 // GREEN

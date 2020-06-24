@@ -189,12 +189,12 @@ void SD_Card_Header_Preparation(){
         
         dataString += "Dev_Id:" + EE_Id_EString + ',' + "SD Type: " + SD_TypeString + ',' + "Volume: " +String(SD_Volume) + " GB" + ',' +
         
-       "Found Sensors Id's:"  +  ','  + Sensor1_Id +  ',' +  Sensor2_Id + ','  + Sensor3_Id + ','  +  "\n";
+       "Found Sensors Id's:"  +  ','  + Sensor1_Id +  ',' +  Sensor2_Id + ','  + Sensor3_Id + ','  +  "PMsensor Rev"  + ',' +  Sensor_Info_SDS  +  ','  +  "\n";
         
         dataString += "Year,Month,Date,Hour,Min,Sec,";
       #ifdef WIND_SENSOR_EXISTS  
         dataString += "WindRaw,velReading,WindMPH,WindTemp,";
-      #endif
+      #endif  
       #ifdef TEMP_HUM_1_SENSOR_EXISTS 
        // dataString += "TemperatureSi072_1,Humidity_1,";
         dataString += "Temp1,Hum1(";
@@ -224,8 +224,11 @@ void SD_Card_Header_Preparation(){
          dataString += "Luminosity,";
       #endif
       #ifdef   ACCL_GYRO_SENSOR_EXISTS       
-          dataString += "Acc.(x),Acc.(y),Acc.(z),Gyro(x),Gyro(y),Gyro(z)"; 
+          dataString += "Acc.(x),Acc.(y),Acc.(z),Gyro(x),Gyro(y),Gyro(z),"; 
       #endif 
+       #ifdef PM25_DUST_SENSOR_EXISTS 
+          dataString += "PM2.5,PM10"; 
+      #endif        
 }
 void SD_Card_Data_Preparation(){
       dataString += Str_DispTime;     
@@ -258,8 +261,12 @@ void SD_Card_Data_Preparation(){
          dataString +=  String(Values.Luminosity) +',';
       #endif
       #ifdef   ACCL_GYRO_SENSOR_EXISTS       
-         dataString += String(Accelometer.x) + ',' + String(Accelometer.y)+ ','+ String(Accelometer.z) + ',' + String(Gyro.x) + ',' + String(Gyro.y)+ ','+ String(Gyro.z);     
+         dataString += String(Accelometer.x) + ',' + String(Accelometer.y)+ ','+ String(Accelometer.z) + ',' + String(Gyro.x) + ',' + String(Gyro.y)+ ','+ String(Gyro.z)+',';     
       #endif
+
+         #ifdef PM25_DUST_SENSOR_EXISTS 
+          dataString += String(Values.PM25)+ ',' + String(Values.PM10) ; 
+      #endif          
   
 }
 

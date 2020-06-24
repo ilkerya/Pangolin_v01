@@ -19,6 +19,7 @@
 // https://www.sparkfun.com/products/14685      //I2c multiplexer
 // https://www.sparkfun.com/products/14589      // I2c sigle ended 2 diffrential 
 
+SdsDustSensor sds(Serial1); // passing HardwareSerial& as parameter
 
 Adafruit_Si7021 THsensor = Adafruit_Si7021();
 
@@ -78,7 +79,25 @@ void Sensors_PeripInit(void){
     SensorACccel_GyroInit(); // ACCEL GYRO  
    #else
     Serial.println("No Accel Gyro_Sensor!!");
-  #endif    
+  #endif  
+
+
+  #ifdef PM25_DUST_SENSOR_EXISTS 
+          sds.begin(); // this line will begin Serial1 with given baud rate (9600 by default)
+
+
+      //    Sensor_Info_SDS = String(sds.queryFirmwareVersion());
+          Sensor_Info_SDS = sds.queryFirmwareVersion().toString();
+          Serial.println(Sensor_Info_SDS); // prints firmware version
+         //Serial.println(sds.queryFirmwareVersion().toString()); // prints firmware version
+          Serial.println(sds.setQueryReportingMode().toString()); // ensures sensor is in 'query' reporting mode
+          Serial.println(sds.setContinuousWorkingPeriod().toString()); // ensures sensor has continuous working period - default but not recommended
+
+         SDS_DustSensor();
+         //   sds.wakeup();
+    #else
+            Serial.println("No PM25 Sensor!!");
+  #endif  
 }
 
 

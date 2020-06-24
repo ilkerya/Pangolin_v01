@@ -13,6 +13,7 @@ void  SensorRead_Si072();
 void  SensorAlt_Read();
 void  SensorLight_Read();
 void  SensorAcccel_GyroRead();
+void SDS_DustSensor(void);
 
 void EE_SerNoWrite2_EE(unsigned int SerialNo);
 
@@ -94,6 +95,7 @@ byte DisplayValueTimer = 0;
 String Sensor1_Id = "";
 String Sensor2_Id = "";
 String Sensor3_Id = "";
+String Sensor_Info_SDS= "";
 
 // the logging file
 File logfile;
@@ -153,6 +155,8 @@ struct
   float Pressure; //  
   float TemperatureBMP; //  
   float Altitude; //
+  float PM25; //
+  float PM10; //   
   float WindRaw;   // 35        
   unsigned int WindMPH;    // 31
   unsigned int WindTemp;   // 35

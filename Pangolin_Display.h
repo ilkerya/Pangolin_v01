@@ -391,7 +391,16 @@ void DisplayTestDevices(void){
     else  display.print("--");     
 
     display.print(" "); // 
-    display.println(deBugString); // 
+    display.print("PM2.5 ");
+    display.print(Values.PM25,1);
+    
+    //
+
+    
+    
+  //  display.println(deBugString); // 
+
+  
 
 
 

@@ -122,11 +122,15 @@ void MainLoop(void){
   if(LoopTask_2Sec){
     LoopTask_2Sec = OFF;
     if(SampleTime == TASK_2SEC) SD_CardLogTask();
+
+ 
     
   }
   if(LoopTask_5Sec){
     LoopTask_5Sec = OFF;
     if(SampleTime == TASK_5SEC) SD_CardLogTask();
+
+    SDS_DustSensor();
 
     DisplayValueTimer++;
     if (DisplayValueTimer > 3)DisplayValueTimer = 0;
@@ -179,6 +183,31 @@ void CurrentRead(){
    ADCSRA &= ~ (1 << ADEN);            // turn off ADC
    #endif
       deBugString = "Cur_tRd_2"; 
+}
+
+void SDS_DustSensor(void){
+      #ifdef PM25_DUST_SENSOR_EXISTS 
+         PmResult pm = sds.queryPm();
+        if (pm.isOk()) {
+              Values.PM25 = pm.pm25;
+              Values.PM10 = pm.pm10;
+               if(Values.PM25 >= 100.00)Values.PM25 = 99.99;
+               if(Values.PM10 >= 100.00)Values.PM25 = 99.99;
+               
+              
+            Serial.print("PM2.5 = ");
+             Serial.print(Values.PM25);
+             Serial.print(", PM10 = ");       
+            Serial.println(Values.PM10);
+
+          // if you want to just print the measured values, you can use toString() method as well
+        //  Serial.println(pm.toString());
+        } else {
+          Serial.print("Could not read values from sensor, reason: ");
+          Serial.println(pm.statusToString());
+        }
+      #endif 
+
 }
 
 void WindSensorRead(){
