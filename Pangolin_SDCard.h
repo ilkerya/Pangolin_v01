@@ -187,7 +187,9 @@ void SD_Card_Header_Preparation(){
           //    dataString = "Year,Month,Date,Hour,Min,Sec,WindRaw,velReading,WindMPH,WindTemp,TemperatureSi072,Humidity,Pressure(hPa),";
         //    dataString += "TemperatureBMP,Altitude(m),Luminosity,Acc.(x),Acc.(y),Acc.(z),Gyro(x),Gyro(y),Gyro(z)";  
         
-        dataString += "Dev_Id:" + EE_Id_EString + ',' + "SD Type: " + SD_TypeString + ',' + "Volume: " +String(SD_Volume) + " GB" + "\n";
+        dataString += "Dev_Id:" + EE_Id_EString + ',' + "SD Type: " + SD_TypeString + ',' + "Volume: " +String(SD_Volume) + " GB" + ',' +
+        
+       "Found Sensors Id's:"  +  ','  + Sensor1_Id +  ',' +  Sensor2_Id + ','  + Sensor3_Id + ','  +  "\n";
         
         dataString += "Year,Month,Date,Hour,Min,Sec,";
       #ifdef WIND_SENSOR_EXISTS  
