@@ -110,6 +110,28 @@ void setup() {
   Serial.begin(115200);
   delay(10);
 
+
+
+        if(MCUSR & (1<<WDRF)){
+            // a watchdog reset occurred
+            Serial.print("Rebooting from a Watchdog Reset");
+          } 
+          if(MCUSR & (1<<BORF)){
+            Serial.print("Rebooting from a Brown-out Reset");
+          }
+          //  a brownout reset occurred       
+         if(MCUSR & (1<<EXTRF)){
+            //  an external reset occurred
+            Serial.print("Rebooting from an External Reset");
+         }       
+          if(MCUSR & (1<<PORF)){
+              //  a power on reset occurred
+              Serial.print("Rebooting from a Power On Reset");
+          }
+
+          //Clear register
+           MCUSR = 0x00;
+
   //  SDCard.LogStatus = 0;      // default start with log off;
   EEReadLog();
   SDCard.LogStatusInit = 0;  // put the header of the csv file 
@@ -136,6 +158,7 @@ void setup() {
     pinMode(KEY_RIGHT,INPUT_PULLUP);
     //wdt_enable(WDT0_1S);
 
+    wdt_reset();
     wdt_enable(WDTO_8S);
     //https://www.nongnu.org/avr-libc/user-manual/group__avr__watchdog.html
    
@@ -155,7 +178,7 @@ void setup() {
  #ifndef DEBUG_SIMULATOR_MODE
     Sensors_PeripInit();
   #endif
-    wdt_reset();
+
 
     #ifdef ARDUINO_MEGA
      #endif
