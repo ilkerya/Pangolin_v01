@@ -337,13 +337,19 @@ void DisplayTestDevices(void){
    //  display.print("");
      display.print(Current_Mains_Raw); //7     
 
-     display.print("  ");
-     display.print(Current_Mains); //7  
-     display.print(" A");
+     display.print(" ");
+     display.print(Mains_Volt_Raw); //7  
 
-     display.print("  ");
-     display.print(Current_MainsAverage); //7  
-     display.println(" A");
+     display.print(" ");
+     display.print(Mains_Volt); //7 
+     display.print("V ");
+
+     display.print(Current_Mains_Rms); //7  
+     display.println("A");
+
+   //  display.println(" Ia");
+
+     
   // display.print("1:"); 
     if (!isnan(Values.TemperatureSi072_Ch1)) {
           display.print(Values.TemperatureSi072_Ch1,1);                    
@@ -382,17 +388,19 @@ void DisplayTestDevices(void){
         display.print(Values.TemperatureSi072_Ch3,1);
         display.write(247);display.print("C"); 
    }
-    else  display.print("--");  
+    else  display.print("------");  
 
     if (!isnan(Values.Humidity_Ch3)) {
     display.print(" %");
     display.print((int)Values.Humidity_Ch3); // 
    }
-    else  display.print("--");     
+    else  display.print("----");     
 
     display.print(" "); // 
     display.print("PM2.5 ");
-    display.print(Values.PM25,1);
+    if(Values.PM25 < 100.00)display.println(Values.PM25,1);
+    else display.println(Values.PM25,0);
+      
     
     //
 

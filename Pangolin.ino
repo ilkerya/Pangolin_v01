@@ -95,6 +95,8 @@ void startTimer(Tc *tc, uint32_t channel, IRQn_Type irq, uint32_t frequency) {
 
 
 void setup() {
+   byte RESET_CASE = MCUSR;
+
       pinMode(53, OUTPUT);  // SS Pin high to avoid miscommunication
    digitalWrite(53, HIGH);  
   
@@ -104,13 +106,39 @@ void setup() {
      pinMode(4, OUTPUT);  // ADE9153A_RESET_PIN
    digitalWrite(4, HIGH);  
 
+    pinMode(A0, OUTPUT);
+    digitalWrite(A0, HIGH);
 
+    pinMode(A2, OUTPUT);
+    digitalWrite(A2, LOW);
+
+    pinMode(A5, INPUT);
+ //   digitalWrite(A5, LOW);
+    
+  //  pinMode(A5, OUTPUT);
+ //   digitalWrite(A5, LOW);
 
   // Open serial communications and wait for port to open:
   Serial.begin(115200);
-  delay(10);
+  delay(40);
 
 
+        Serial.print("MCUSR: ");
+        Serial.println(RESET_CASE);
+
+
+  if(MCUSR & WDRF) {
+    Serial.print("Rebooting from a Watchdog Reset");
+  }
+  else if(MCUSR & BORF) {
+    Serial.print("Rebooting from a Brown-out Reset");
+  }
+  else if(MCUSR & EXTRF) {
+    Serial.print("Rebooting from an External Reset");
+  }
+   else if(MCUSR & PORF) {
+              Serial.print("Rebooting from a Power On Reset");
+  }
 
         if(MCUSR & (1<<WDRF)){
             // a watchdog reset occurred

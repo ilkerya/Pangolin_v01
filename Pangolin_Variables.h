@@ -82,10 +82,16 @@ byte KeyBoardTimeOut = 0;
 bool KeyBoardTimeOutEnb = 0;
 
 unsigned int Current_Mains_Raw;
+unsigned int Current_Mains_Raw_Trim;
 float Current_Mains;
 float Current_MainsAverage;
+float    Current_Mains_Rms ;
+float    Current_Mains_Av ;
 unsigned int CurrentArray[10];
 byte CurrentIndexer = 0;
+unsigned int TrimpotAdc ;
+unsigned int Mains_Volt_Raw ;
+unsigned int Mains_Volt ;
 
 bool DisplayInitDelay = 0;
 bool DisplaySleepEnable = 0;

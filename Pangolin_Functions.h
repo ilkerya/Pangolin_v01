@@ -58,7 +58,7 @@ void MainLoop(void){
       Display_SwitchOff();
       #endif
     }
-       #ifdef LEM_CURRENT_EXISTS        
+      #ifdef LEM_CURRENT_EXISTS        
         CurrentRead();
       #endif 
     
@@ -154,13 +154,23 @@ void MainLoop(void){
 }
 
 void CurrentRead(){
-    
+  // https://www.onlinegdb.com/edit/Hkmlxi_08
+      
     deBugString = "Cur_tRd_1";
      #ifdef ARDUINO_MEGA
     ADCSRA |= (1 << ADEN); // enable adc
          #endif
     delay(1);
-    Current_Mains_Raw = analogRead(5);
+    Current_Mains_Raw = analogRead(4);
+  //  Current_Mains_Raw_Trim = Current_Mains_Raw;
+     //  delay(1);
+       delay(1);   
+     Mains_Volt_Raw =  analogRead(1);
+
+  //  239vac -> 4.94vdc
+  // 242  vac  5vdc  242/1024 = 0.2363281
+
+    Mains_Volt =   (unsigned int)((float)Mains_Volt_Raw * 0.2363281);     
 
     CurrentArray[CurrentIndexer]= Current_Mains_Raw;
     CurrentIndexer++;
@@ -170,15 +180,46 @@ void CurrentRead(){
       for(unsigned int i=0; i<10; i++){
           Cumulative += CurrentArray[i];   
       } 
-      Cumulative /=  10;
-      //Current_MainsAverage = ((float)Cumulative * 4.883)/1000;
-      Current_MainsAverage = ((float)Cumulative * 5.044)/1000; // 2K2 // 4.7K // 2K2 
+
+     
+     
+     #define Volt_Coeff 4.8828125 // rms 5v
+     #define PeakToRms  1.4142135 
+    // #define Rms_Coeff  6.90533966  // Volt_Coeff *  PeakToRms    
+     #define Rms_Coeff  4.8828125  // Volt_Coeff *  PeakToRms       
+   /*
+       Current_MainsAverage = ((Cumulative%10) * Volt_Coeff )/10000; 
+      // then the decimal part 
+      Current_MainsAverage += ((float)(Cumulative/10) * Volt_Coeff )/1000;
+*/
+       Current_Mains_Rms = ((Cumulative%10) * Rms_Coeff )/10000; 
+      // then the decimal part 
+      Current_Mains_Rms += ((float)(Cumulative/10) * Rms_Coeff )/1000;
+    
+   //   Current_Mains_Rms = Current_MainsAverage * 1.414213;  
+   //   Current_Mains_Av = Current_Mains_Rms / 1,11;    
+    //  Current_MainsAverage = ((float)Cumulative * 5.044)/1000; // 2K2 // 4.7K // 2K2 
+     //   Current_MainsAverage = ((float)Cumulative * 9.766)/1000;  //direct
     }
 
-    
-    //Current_Mains = ((float)Current_Mains_Raw * 4.883)/1000;
+  //  Current_Mains = ((float)Current_Mains_Raw * Rms_Coeff)/1000;
+   // Current_Mains *= PeakToRms;
   
-    Current_Mains = ((float)Current_Mains_Raw * 5.044)/1000;
+ //   Current_Mains = ((float)Current_Mains_Raw * 5.044)/1000;
+  //   Current_Mains = ((float)Current_Mains_Raw * 9.766)/1000; // direct no voltage divider
+
+   
+
+   Serial.print("Current Adc: ");  
+   Serial.println(Current_Mains_Raw);
+   Serial.print("Current Average as Rms(A): ");  
+   Serial.println(Current_Mains_Rms);
+   Serial.print("Voltage Adc: ");  
+   Serial.println(Mains_Volt_Raw);
+   Serial.print("Voltage(Vac) :");  
+   Serial.println(Mains_Volt);
+
+  
    #ifdef ARDUINO_MEGA
    ADCSRA &= ~ (1 << ADEN);            // turn off ADC
    #endif
@@ -191,8 +232,8 @@ void SDS_DustSensor(void){
         if (pm.isOk()) {
               Values.PM25 = pm.pm25;
               Values.PM10 = pm.pm10;
-               if(Values.PM25 >= 100.00)Values.PM25 = 99.99;
-               if(Values.PM10 >= 100.00)Values.PM25 = 99.99;
+               if(Values.PM25 >= 250.0)Values.PM25 = 250.0;
+               if(Values.PM10 >= 250.0)Values.PM25 = 250.0;
                
               
             Serial.print("PM2.5 = ");
