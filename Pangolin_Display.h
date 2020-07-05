@@ -209,7 +209,7 @@ void displayValues(void)
     
     if(SDCard.Status != SD_NOT_Present){
       if (SDCard.LogStatus){
-        display.print("Log2 ");
+        display.print("File ");
         display.print(LOG_FILE);  // 8 left
       }
       else display.print("LOG OFF Sample:");//15
@@ -246,7 +246,10 @@ void displayValues(void)
    display.display();
 }
 
-String Disp_MENU_NULL = "ENTER  UP DOWN    ESC";
+//String Disp_MENU_NULL = "ENTER  UP DOWN    ESC";
+String Disp_MENU_NULL_ENT = "ENTER     ";
+String Disp_MENU_NULL_ESC = "     ESC";
+
 String Disp_MENU1 =     "LOG START & STOP MENU";
 String Disp_MENU2 =     "LOG SAMPLE TIME MENU ";
 String Disp_MENU3 =     "DISPLAY STANDBYE MENU";
@@ -267,7 +270,12 @@ String Disp_MENU2_SUB7= " 60 Sec     "; //12
 
 void DisplayMenu(void){
   switch(Menu){
-    case MENU_NULL : display.print(Disp_MENU_NULL); 
+    case MENU_NULL :// display.print(Disp_MENU_NULL); 
+          display.print(Disp_MENU_NULL_ENT);                           
+          display.write(30);  
+          display.write(' '); 
+          display.write(31); 
+          display.print(Disp_MENU_NULL_ESC);                    
       break;
     case MENU1 :     display.print(Disp_MENU1); 
       break;
@@ -335,11 +343,12 @@ void DisplayFullSensors(void){
 
 void DisplayTestDevices(void){
    //  display.print("");
+/*
      display.print(Current_Mains_Raw); //7     
 
      display.print(" ");
      display.print(Mains_Volt_Raw); //7  
-
+*/
      display.print(" ");
      display.print(Mains_Volt); //7 
      display.print("V ");

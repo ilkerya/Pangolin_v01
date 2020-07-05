@@ -18,6 +18,7 @@ git push https://github.com/ilkerya/Pangolin.git master
 //#define ACCL_GYRO_SENSOR_EXISTS  
 //#define WIND_SENSOR_EXISTS  
 #define LEM_CURRENT_EXISTS
+#define VOLTAGE_MEASURE_EXISTS
 #define PM25_DUST_SENSOR_EXISTS
 
 #define DEBUG_KEY

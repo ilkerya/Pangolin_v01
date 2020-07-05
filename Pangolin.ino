@@ -5,7 +5,7 @@
  //for setting date&time open arduino serial monitor and send the data stream
  //   Year,Month,Date,Hour,Minute;Second
  //   2020,05,27,21,14,23
- //  2020,06,09,21,16,40
+ //  2020,07,05,22,22,30
  // EEEEf567 
  // 115200 baud Both NL & CR
  // put leading zero for numbers less than 10
@@ -105,14 +105,14 @@ void setup() {
 
      pinMode(4, OUTPUT);  // ADE9153A_RESET_PIN
    digitalWrite(4, HIGH);  
-
+/*
     pinMode(A0, OUTPUT);
     digitalWrite(A0, HIGH);
 
     pinMode(A2, OUTPUT);
     digitalWrite(A2, LOW);
-
-    pinMode(A5, INPUT);
+*/
+ //   pinMode(A5, INPUT);
  //   digitalWrite(A5, LOW);
     
   //  pinMode(A5, OUTPUT);
@@ -120,7 +120,7 @@ void setup() {
 
   // Open serial communications and wait for port to open:
   Serial.begin(115200);
-  delay(40);
+  delay(10);
 
 
         Serial.print("MCUSR: ");

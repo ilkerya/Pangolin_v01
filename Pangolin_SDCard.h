@@ -216,7 +216,10 @@ void SD_Card_Header_Preparation(){
       #endif     
       #ifdef LEM_CURRENT_EXISTS 
         dataString += "Current(A)rms,";
-      #endif      
+      #endif   
+      #ifdef VOLTAGE_MEASURE_EXISTS 
+        dataString += "Voltage(V),";
+      #endif          
       #ifdef BAR_PRES_SENSOR_EXISTS
         dataString += "Pressure(hPa),TemperatureBMP,Altitude(m),";
       #endif
@@ -252,8 +255,11 @@ void SD_Card_Data_Preparation(){
         dataString += String(Values.TemperatureSi072_Ch3)+ ',' + String(Values.Humidity_Ch3)+ ',';
       #endif   
       #ifdef LEM_CURRENT_EXISTS 
-        dataString += String(Current_MainsAverage) + ',';
+        dataString += String(Current_Mains_Rms) + ',';
       #endif  
+      #ifdef VOLTAGE_MEASURE_EXISTS 
+        dataString += String(Mains_Volt) + ',';
+      #endif    
       #ifdef BAR_PRES_SENSOR_EXISTS
         dataString +=  String(Values.Pressure)+ ',' + String(Values.TemperatureBMP) + ',' + String(Values.Altitude)+ ',';
       #endif

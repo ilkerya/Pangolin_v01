@@ -170,7 +170,11 @@ void CurrentRead(){
   //  239vac -> 4.94vdc
   // 242  vac  5vdc  242/1024 = 0.2363281
 
-    Mains_Volt =   (unsigned int)((float)Mains_Volt_Raw * 0.2363281);     
+  //  238vac -> 3.10vdc  // 33K/8K2
+  // 383  vac  5vdc  383/1024 = 0.374874
+  
+
+    Mains_Volt =   (unsigned int)((float)Mains_Volt_Raw * 0.374874);     
 
     CurrentArray[CurrentIndexer]= Current_Mains_Raw;
     CurrentIndexer++;
