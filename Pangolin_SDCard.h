@@ -46,6 +46,21 @@ SdFile root;
 #define SDHC_TYPE 3
 #define UNKNOWN_TYPE 4
 
+void SD_Card_Init();
+
+
+void File_Length(){
+  SD_Card_Init(); 
+    File dataFile = SD.open(LOG_FILE, FILE_READ);
+    if (dataFile) {
+      //dataFile.println(dataString);
+      FileSize.Total = dataFile.size();
+    }
+    dataFile.close(); 
+     Serial.print("File Size Init:"); //  2020,07,07,01,05,40
+      Serial.println(FileSize.Total); // 2020,07,07,01,05,40
+}
+
 void SD_Card_Info(void){
   Serial.print("\nInitializing SD card...");
 
@@ -127,6 +142,7 @@ void SD_Card_Info(void){
     root.ls(LS_R | LS_DATE | LS_SIZE);
     }
   }
+ // File_Length();
 }
 void SD_Create_File(void){
 
@@ -313,16 +329,68 @@ void SD_CardLogTask(){
     deBugString = "SDCLgTsk_6";    
     if (dataFile) {
       dataFile.println(dataString);
+
+
+      FileSize.Total = dataFile.size();
+      Serial.print("File Size:"); //  2020,07,07,01,05,40
+      Serial.println(FileSize.Total); // 2020,07,07,01,05,40 
+
+/*      
+#define KBYTES 1024
+#define MBYTES 1048576
+#define GBYTES 1073741824
+*/
+#define KBYTES 1000
+#define MBYTES 1000000
+#define GBYTES 1000000000
+      
+      if(FileSize.Total < KBYTES) {
+        Serial.print(FileSize.Total); 
+        Serial.print(" Bytes"); 
+      } 
+      else if(FileSize.Total < MBYTES) {
+        Serial.print(FileSize.Total/KBYTES); 
+        Serial.print(".");
+        Serial.print((FileSize.Total%KBYTES)/10); //2 digits  xxx.xx Kbytes
+        /*
+        unsigned int Ratio = FileSize%KBYTES;
+        if (Ratio < 1000)Serial.print((FileSize%KBYTES)/10); //2 digits  xxx.xx Kbytes
+        else Serial.print((FileSize%KBYTES)/100); //2 digits  0xxx.xx Kbytes
+       */  
+        Serial.print(" Kbytes");        
+       }  
+      else if(FileSize.Total < GBYTES){
+        Serial.print(FileSize.Total/MBYTES); 
+        Serial.print("."); 
+        Serial.print((FileSize.Total%MBYTES)/10000 ); //2 digits     //  xxx.xx Mbytes      999.999
+        Serial.print(" Mbytes");        
+      } 
+      else {
+       Serial.print(FileSize.Total/GBYTES); 
+       Serial.print("."); 
+       Serial.print((FileSize.Total%GBYTES)/10000000 ); // 2 digits     //  xxx.xx Gbytes      999.999
+       Serial.print(" GBytes");  
+      }     
+
+      Serial.println(); // 2020,07,07,01,05,40 
+      
+        
+      
+ 
+      
       dataFile.close();
       // print to the serial port too:
         Serial.print("dataString:");
       Serial.println(dataString);
+
+      
     }      
     // if the file isn't open, pop up an error:
   else {
     //  Serial.println("error opening datalog.txt");
       Serial.print("error opening : "); 
       Serial.println(LOG_FILE);    
+      FileSize.Total = 0;
     }
     deBugString = "SDCLgTsk_7";   
   }

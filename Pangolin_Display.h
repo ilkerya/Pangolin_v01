@@ -175,49 +175,40 @@ void testdrawchar(void) {
  // delay(2000);
 }
 
-void displayValues(void)
-{
-  if(DisplayInitDelay == OFF)return;
+void SDcard_Info(){
+            if(SDCard.Status = SD1_TYPE){
+            display.print("SD1 ");display.print(SD_Volume);display.print("Gb"); // 4+5+2 = 11
+            }
+          else if(SDCard.Status = SD2_TYPE){
+            display.print("SD2 ");display.print(SD_Volume);display.print("Gb");
+            } 
+          else if(SDCard.Status = SDHC_TYPE){
+            display.print("SDH ");display.print(SD_Volume);display.print("Gb");
+           } 
+}
 
-  //testdrawchar();
-  //return;
-  
-  display.clearDisplay();
-  display.setTextSize(1);
-  
-   display.setCursor(0, 1);
-    display.print(Str_Time); 
-    display.print(' ');    
-    display.println(Str_Date);       
-    //Str_Date + Str_Time + ' ';  
+void SDCard_or_File(){
+    switch(DisplayValueTimer){
+      case 0:case 2:     
+          SDcard_Info();
+         break;
+         case 1:case 3: 
+           //display.print("File ");
+           display.print(LOG_FILE); //10
+           display.print(' '); //1
+         break;
+         default:
+         break;  
+    }      
+}
 
 
-      switch(SDCard.Status){
-        case 0 :display.print("No Card  Reset 2 Run");// 26
-        break;
-        case 1 :display.print("SD1 Card ");display.print(SD_Volume);display.print(" Gb ");
-        break;
-        case 2 :display.print("SD2 Card ");display.print(SD_Volume);display.print(" Gb ");
-        break;
-        case 3 :display.print("SDHC Card ");display.print(SD_Volume);display.print(" Gb");
-        break; 
-        default://display.print("Unknown Problem !");   
-                  display.print("Card Problem    !");       
-     }
-     display.println();
-    
-    
-    if(SDCard.Status != SD_NOT_Present){
-      if (SDCard.LogStatus){
-        display.print("File ");
-        display.print(LOG_FILE);  // 8 left
-      }
-      else display.print("LOG OFF Sample:");//15
+void ShowLogTime(){
       String DispSample="";
       switch(SampleTime){
-       case TASK_500MSEC:DispSample = " 500mS";
+       case TASK_500MSEC:DispSample = "0.5Sec"; //5 
           break;        
-        case TASK_1SEC : DispSample = "  1Sec";
+        case TASK_1SEC : DispSample = "  1Sec";//5
           break; 
         case TASK_2SEC : DispSample = "  2Sec";
           break;        
@@ -230,12 +221,83 @@ void displayValues(void)
         case TASK_60SEC :DispSample = " 60Sec";
           break;     
       }  
-      display.println(DispSample);       
+      display.print("    ");      //4 
+      display.print(DispSample); 
+}
+
+void displayValues(void)
+{
+  if(DisplayInitDelay == OFF)return;
+
+  //testdrawchar();
+  //return;
+  
+  display.clearDisplay();
+  display.setTextSize(1);
+     display.setCursor(0, 1);
+/*  
+   display.setCursor(0, 1);
+    display.print(Str_Time); 
+    display.print(' ');    
+    display.println(Str_Date);   
+*/
+      display.print(Str_Date);   //10
+      display.print("   ");
+      display.println(Str_Time);     //8
+            
+
+
+    
+    if(SDCard.Status != SD_NOT_Present){
+    //   if (SDCard.LogStatus)SDCard_or_File(); 
+    //   else SDcard_Info();
+       SDCard_or_File();           
     }
-    else{
-      Serial.println("Card Problem");
-        display.println("Problem");    
+    else //display.print("Can't Read!");//11
+           display.print("SD problem!");//11
+
+/*
+      switch(SDCard.Status){
+
+        case 1 :display.print("SD1 ");display.print(SD_Volume);display.print("Gb ");//ShowLogTime(); //4+5+3+9 = 21
+        break;
+        case 2 :display.print("SD2 ");display.print(SD_Volume);display.print("Gb ");//ShowLogTime(); //74+5+3+9 = 21
+        break;
+        case 3 :display.print("SDH ");display.print(SD_Volume);display.print("Gb ");//ShowLogTime();//4+5+3+9 = 21
+        break; 
+         case 0 ://display.print("No Card  Reset 2 Run ");// 21  SD_NOT_Present
+                  //display.print("Can't Read!     Reset");// 21
+        //break;
+        default://display.print("Unknown Problem !");   
+                 // display.print("Can't Read!     Reset");// 21 
+                  display.print("Can't Read! ");// 21   
+         break;
+     } 
+*/
+      
+    ShowLogTime();
+    display.println();
+    if( FileSize.Total) {
+      display.print(FileSize.Total);
+      display.print(" Byte");
     }
+    else display.print("                    ");
+     
+   /*
+    if(SDCard.Status != SD_NOT_Present){
+      if (SDCard.LogStatus){
+       // display.print("File ");
+        display.print(LOG_FILE_SHORT);  //6  21-6 = 15 14 //      123456789 Byte
+        display.print(FileSize);
+        display.print(" Byte");
+      }
+      else //display.print("LOG OFF Sample:");//15
+          display.print("      Log. Off       ");//21        
+    }
+    else  display.print("                     ");//21
+    */
+
+    display.println();
      //4th line
    // DisplayFullSensors();
     DisplayTestDevices();
@@ -417,11 +479,6 @@ void DisplayTestDevices(void){
     
   //  display.println(deBugString); // 
 
-  
-
-
-
-
     switch(DisplayValueTimer){
       case 0:     
           display.print("Dev Id:  "); // 
@@ -440,9 +497,6 @@ void DisplayTestDevices(void){
             display.println(Sensor3_Id);
          break;
          default:
-         break;
-         
-      
-    }
-        
+         break;  
+    }      
 }

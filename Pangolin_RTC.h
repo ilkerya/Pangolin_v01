@@ -53,10 +53,10 @@ void RTC_TimeClock(){
 
     Str_Date = "";
     Str_Date += String(now.year(),DEC);   
-    Str_Date += '/';    
+    Str_Date += '.';    
     if(now.month()<10)Str_Date += '0';  
      Str_Date += String(now.month(),DEC);
-     Str_Date += '/';       
+     Str_Date += '.';       
     if(now.day()<10)Str_Date += '0';  
      Str_Date += String(now.day(),DEC);
     // Str_Date += ''; 

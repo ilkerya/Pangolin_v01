@@ -108,6 +108,19 @@ File logfile;
 
 #define LOG_FILE "AD_Log.csv"
 
+struct
+{
+  unsigned long Total;  // log on or off
+  unsigned char Byte; // log on  init case
+  unsigned char Kbyte;
+  unsigned char Mbyte;
+}FileSize;
+
+
+
+
+
+
 String EE_Id_EString =""; 
 
 String deBugString = "Start.....";  // Max 10 caharacter
