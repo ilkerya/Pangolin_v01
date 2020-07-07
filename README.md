@@ -29,5 +29,18 @@ https://cdn-learn.adafruit.com/downloads/pdf/adafruit-bmp388.pdf?timestamp=15561
  
  https://moderndevice.com/product/wind-sensor/
  
+ // https://cdn.sparkfun.com/assets/parts/1/2/2/7/5/SDS021_laser_PM2.5_sensor_specification-V1.0.pdf    // PM2.5 dust particle sensor
+
+// https://www.lem.com/en/5-b10   current sensor LEM AT5B10
+// https://www.microchip.com/wwwproducts/en/MCP6002 for Buffering Cuurent Sensor AT5B10
+
+// Differenatial I2C communication
+// https://www.sparkfun.com/products/14685      //I2c multiplexer
+// https://www.sparkfun.com/products/14589      // I2c sigle ended 2 diffrential 
+// https://cdn.sparkfun.com/assets/c/4/7/0/9/SparkFun_Differential_I2C_Breakout_PCA9615_Qwiic.pdf
+
+ https://learn.adafruit.com/adafruit-tca9548a-1-to-8-i2c-multiplexer-breakout
+ 
+ 
  
  
